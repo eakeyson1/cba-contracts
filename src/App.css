@@ -25,19 +25,21 @@
   margin: 0;
 }
 
-.Contact-Button {
+.Contract-Button {
   background-color: #45aa42;
-  padding: 5px 15px;
+  padding: 15px 25px;
   color: white;
   border-radius: 5px;
   outline: 0;
   text-transform: uppercase;
-  margin: 10px 0px;
+  margin: 25px 0px;
   cursor: pointer;
   box-shadow: 0px 2px 2px lightgray;
   transition: ease background-color 250ms;
   font-weight: bold;
   margin-left: 5vh;
+  display: block;
+  font-size: 18px;
 }
 
 .Generate-PDF-Button {
@@ -78,3 +80,4 @@
     transform: rotate(360deg);
   }
 }
+
