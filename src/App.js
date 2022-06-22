@@ -20,6 +20,7 @@ export default class App extends PureComponent {
         consentOfSpouseVisible: false,
         corporateResolutionToSellVisible: false,
         brokerConfidentialityVisible: false,
+        cashflowAnalysisVisible: false,
 
         /////   Consent of Spouse   /////
         consentOfSpousePersonName: "",
@@ -29,10 +30,9 @@ export default class App extends PureComponent {
         consentOfSpouseDay: "",
         consentOfSpouseMonth: "",
         consentOfSpouseYear: "",
-
         consentOfSpouseError: "",
 
-        /////   Corporate Resolution to Sell    
+        /////   Corporate Resolution to Sell   /////    
         corporateResolutionToSellBusinessName: "",
         corporateResolutionToSellBusinessCity: "",
         corporateResolutionToSellBusinessCounty: "",
@@ -40,24 +40,47 @@ export default class App extends PureComponent {
         corporateResolutionToSellDay: "",
         corporateResolutionToSellMonth: "",
         corporateResolutionToSellYear: "",
-
         corporateResolutionToSellError: "",
 
-        /////   Broker Confidentiality    
+        /////   Broker Confidentiality   /////    
         brokerConfidentialityClientName: "",
         brokerConfidentialityBrokerName: "",
         brokerConfidentialityDay: "",
         brokerConfidentialityMonth: "",
         brokerConfidentialityYear: "",
-
         brokerConfidentialityError: "",
+
+        /////   Cashflow Analysis   /////
+        cashflowAnalysisBusinessName: "",
+        cashflowAnalysisFiscalYearSales: "",
+        cashflowAnalysisNetOperatingIncome: "",
+        cashflowAnalysisOwnerSalary: "",
+        cashflowAnalysisOwnerVehicle: "",
+        cashflowAnalysisOwnerInsurance: "",
+        cashflowAnalysisOwnerMedical: "",
+        cashflowAnalysisOwnerPayrollTaxes: "",
+        cashflowAnalysisOwnerTravelEntertainment: "",
+        cashflowAnalysisNonBusinessTelephone: "",
+        cashflowAnalysisNonBusinessUtilities: "",
+        cashflowAnalysisNonBusinessLegal: "",
+        cashflowAnalysisNonBusinessAccounting: "",
+        cashflowAnalysisInterestExpense: "",
+        cashflowAnalysisDeprecationAmortization: "",
+        cashflowAnalysisPartnerFamilyExcessSalary: "",
+        cashflowAnalysisNonRealSalaries: "",
+        cashflowAnalysisFamilyBenefits: "",
+        cashflowAnalysisDonations: "",
+        cashflowAnalysisNonRecurring: "",
+        cashflowAnalysisRentAdjustments: "",
+        cashflowAnalysisInventoryAdjustments: "",
+        cashflowAnalysisError: "",
 
     };
     this.displayBlis = this.displayBlis.bind(this);
     this.displayConsentOfSpouse = this.displayConsentOfSpouse.bind(this);
     this.displayCorporateResolutionToSell = this.displayCorporateResolutionToSell.bind(this);
     this.displaybrokerConfidentiality = this.displaybrokerConfidentiality.bind(this);
-
+    this.displayCashflowAnalysis = this.displayCashflowAnalysis.bind(this);
 
     /////   Consent of Spouse   /////
     this.handleConsentOfSpouseChangePersonName = this.handleConsentOfSpouseChangePersonName.bind(this);
@@ -84,6 +107,29 @@ export default class App extends PureComponent {
     this.handleBrokerConfidentialityChangeMonth = this.handleBrokerConfidentialityChangeMonth.bind(this);
     this.handleBrokerConfidentialityChangeYear = this.handleBrokerConfidentialityChangeYear.bind(this);
 
+    /////   Cashflow Analysis   /////
+    this.handleCashflowAnalysisChangeBusinessName = this.handleCashflowAnalysisChangeBusinessName.bind(this);
+    this.handleCashflowAnalysisChangeNetOperatingIncome = this.handleCashflowAnalysisChangeNetOperatingIncome.bind(this);
+    this.handleCashflowAnalysisChangeFiscalYearSales = this.handleCashflowAnalysisChangeFiscalYearSales.bind(this);
+    this.handleCashflowAnalysisChangeOwnersPayrollTaxes = this.handleCashflowAnalysisChangeOwnersPayrollTaxes.bind(this);
+    this.handleCashflowAnalysisChangeOwnerSalary = this.handleCashflowAnalysisChangeOwnerSalary.bind(this);
+    this.handleCashflowAnalysisChangeOwnersVehicle = this.handleCashflowAnalysisChangeOwnersVehicle.bind(this);
+    this.handleCashflowAnalysisChangeInterestExpense = this.handleCashflowAnalysisChangeInterestExpense.bind(this);
+    this.handleCashflowAnalysisChangeOwnersInsurance = this.handleCashflowAnalysisChangeOwnersInsurance.bind(this);
+    this.handleCashflowAnalysisChangeOwnersMedical = this.handleCashflowAnalysisChangeOwnersMedical.bind(this);
+    this.handleCashflowAnalysisChangeOwnerTravelEntertainment = this.handleCashflowAnalysisChangeOwnerTravelEntertainment.bind(this);
+    this.handleCashflowAnalysisChangeNonBusinessTelephone = this.handleCashflowAnalysisChangeNonBusinessTelephone.bind(this);
+    this.handleCashflowAnalysisChangeNonBusinessUtilities = this.handleCashflowAnalysisChangeNonBusinessUtilities.bind(this);
+    this.handleCashflowAnalysisChangeNonBusinessLegal = this.handleCashflowAnalysisChangeNonBusinessLegal.bind(this);
+    this.handleCashflowAnalysisChangeNonBusinessAccounting = this.handleCashflowAnalysisChangeNonBusinessAccounting.bind(this);
+    this.handleCashflowAnalysisChangeDepreciationAmortization = this.handleCashflowAnalysisChangeDepreciationAmortization.bind(this);
+    this.handleCashflowAnalysisChangePartnerFamilyExcessSalary = this.handleCashflowAnalysisChangePartnerFamilyExcessSalary.bind(this);
+    this.handleCashflowAnalysisChangeNonRealSalaries = this.handleCashflowAnalysisChangeNonRealSalaries.bind(this);
+    this.handleCashflowAnalysisChangeFamilyBenefits = this.handleCashflowAnalysisChangeFamilyBenefits.bind(this);
+    this.handleCashflowAnalysisChangeDonations = this.handleCashflowAnalysisChangeDonations.bind(this);
+    this.handleCashflowAnalysisChangeNonRecurring = this.handleCashflowAnalysisChangeNonRecurring.bind(this);
+    this.handleCashflowAnalysisChangeRentAdjustments = this.handleCashflowAnalysisChangeRentAdjustments.bind(this);
+    this.handleCashflowAnalysisChangeInventoryAdjustments = this.handleCashflowAnalysisChangeInventoryAdjustments.bind(this);
   }
 
   handleConsentOfSpouseChangeDay(event) {
@@ -143,6 +189,72 @@ export default class App extends PureComponent {
   handleBrokerConfidentialityChangeYear(event) {
     this.setState({brokerConfidentialityYear: event.target.value});
   }
+  handleCashflowAnalysisChangeBusinessName(event) {
+    this.setState({cashflowAnalysisBusinessName: event.target.value});
+  }
+  handleCashflowAnalysisChangeNetOperatingIncome(event) {
+    this.setState({cashflowAnalysisNetOperatingIncome: event.target.value});
+  }
+  handleCashflowAnalysisChangeOwnerSalary(event) {
+    this.setState({cashflowAnalysisOwnerSalary: event.target.value});
+  }
+  handleCashflowAnalysisChangeFiscalYearSales(event) {
+    this.setState({cashflowAnalysisFiscalYearSales: event.target.value});
+  }
+  handleCashflowAnalysisChangeOwnersVehicle(event) {
+    this.setState({cashflowAnalysisOwnerVehicle: event.target.value});
+  }
+  handleCashflowAnalysisChangeOwnersInsurance(event) {
+    this.setState({cashflowAnalysisOwnerInsurance: event.target.value});
+  }
+  handleCashflowAnalysisChangeOwnersMedical(event) {
+    this.setState({cashflowAnalysisOwnerMedical: event.target.value});
+  }
+  handleCashflowAnalysisChangeOwnersPayrollTaxes(event) {
+    this.setState({cashflowAnalysisOwnerPayrollTaxes: event.target.value});
+  }
+  handleCashflowAnalysisChangeOwnerTravelEntertainment(event) {
+    this.setState({cashflowAnalysisOwnerTravelEntertainment: event.target.value});
+  }
+  handleCashflowAnalysisChangeNonBusinessTelephone(event) {
+    this.setState({cashflowAnalysisNonBusinessTelephone: event.target.value});
+  }
+  handleCashflowAnalysisChangeNonBusinessUtilities(event) {
+    this.setState({cashflowAnalysisNonBusinessUtilities: event.target.value});
+  }
+  handleCashflowAnalysisChangeNonBusinessLegal(event) {
+    this.setState({cashflowAnalysisNonBusinessLegal: event.target.value});
+  }
+  handleCashflowAnalysisChangeNonBusinessAccounting(event) {
+    this.setState({cashflowAnalysisNonBusinessAccounting: event.target.value});
+  }
+  handleCashflowAnalysisChangeInterestExpense(event) {
+    this.setState({cashflowAnalysisInterestExpense: event.target.value});
+  }
+  handleCashflowAnalysisChangeDepreciationAmortization(event) {
+    this.setState({cashflowAnalysisDeprecationAmortization: event.target.value});
+  }
+  handleCashflowAnalysisChangePartnerFamilyExcessSalary(event) {
+    this.setState({cashflowAnalysisPartnerFamilyExcessSalary: event.target.value});
+  }
+  handleCashflowAnalysisChangeNonRealSalaries(event) {
+    this.setState({cashflowAnalysisNonRealSalaries: event.target.value});
+  }
+  handleCashflowAnalysisChangeFamilyBenefits(event) {
+    this.setState({cashflowAnalysisFamilyBenefits: event.target.value});
+  }
+  handleCashflowAnalysisChangeDonations(event) {
+    this.setState({cashflowAnalysisDonations: event.target.value});
+  }
+  handleCashflowAnalysisChangeNonRecurring(event) {
+    this.setState({cashflowAnalysisNonRecurring: event.target.value});
+  }
+  handleCashflowAnalysisChangeRentAdjustments(event) {
+    this.setState({cashflowAnalysisRentAdjustments: event.target.value});
+  }
+  handleCashflowAnalysisChangeInventoryAdjustments(event) {
+    this.setState({cashflowAnalysisInventoryAdjustments: event.target.value});
+  }
 
   displayBlis() {
     this.setState({
@@ -150,6 +262,7 @@ export default class App extends PureComponent {
       consentOfSpouseVisible: false,
       corporateResolutionToSellVisible: false,
       brokerConfidentialityVisible: false,
+      cashflowAnalysisVisible: false,
     })
   }
 
@@ -159,6 +272,7 @@ export default class App extends PureComponent {
       blisVisible: false,
       corporateResolutionToSellVisible: false,
       brokerConfidentialityVisible: false,
+      cashflowAnalysisVisible: false,
     })
   }
 
@@ -168,6 +282,7 @@ export default class App extends PureComponent {
       consentOfSpouseVisible: false,
       blisVisible: false,
       brokerConfidentialityVisible: false,
+      cashflowAnalysisVisible: false,
     })
   }
 
@@ -176,26 +291,19 @@ export default class App extends PureComponent {
       brokerConfidentialityVisible: !this.state.brokerConfidentialityVisible,
       corporateResolutionToSellVisible: false,
       consentOfSpouseVisible: false,
-      blisVisible: false
+      blisVisible: false,
+      cashflowAnalysisVisible: false
     })
   }
 
-  renderBlis() {
-    if(this.state.blisVisible === true){
-      return(
-        <div>
-          <FaBackspace size={50} color="white" onClick={() => this.setState({blisVisible: false})}/>
-          <p>blis stuff</p>
-          <form action="/action_page.php">
-            <label for="fname">First name:</label>
-            <input type="text" id="fname" name="fname"/>
-            <label for="lname">Last name:</label>
-            <input type="text" id="lname" name="lname"/>
-            <input type="submit" value="Submit"/>
-          </form>
-        </div>
-      )
-    }
+  displayCashflowAnalysis(){
+    this.setState({
+      cashflowAnalysisVisible: !this.state.cashflowAnalysisVisible,
+      brokerConfidentialityVisible: false,
+      corporateResolutionToSellVisible: false,
+      consentOfSpouseVisible: false,
+      blisVisible: false
+    })
   }
 
   renderConsentOfSpouseDayDropdown(){
@@ -567,6 +675,24 @@ export default class App extends PureComponent {
     }
   }
 
+  renderBlis() {
+    if(this.state.blisVisible === true){
+      return(
+        <div>
+          <FaBackspace size={50} color="white" onClick={() => this.setState({blisVisible: false})}/>
+          <p>blis stuff</p>
+          <form action="/action_page.php">
+            <label for="fname">First name:</label>
+            <input type="text" id="fname" name="fname"/>
+            <label for="lname">Last name:</label>
+            <input type="text" id="lname" name="lname"/>
+            <input type="submit" value="Submit"/>
+          </form>
+        </div>
+      )
+    }
+  }
+
   renderConsentOfSpouse() {
     if(this.state.consentOfSpouseVisible === true){
       return(
@@ -757,6 +883,158 @@ export default class App extends PureComponent {
     }
   }
 
+  renderCashflowAnalysis() {
+    if(this.state.cashflowAnalysisVisible === true){
+      return(
+        <div style={{width: '65%', margin: '0 auto'}}>
+          <div style={{display: 'flex', marginTop: '3vh'}}>
+            <FaBackspace size={50} color="white" onClick={() => this.setState({cashflowAnalysisVisible: false})}/>
+            <p style={{color: 'white', marginLeft: '35vh', fontSize: 40, fontWeight: 'bold'}}>Cashflow Analysis</p>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3vh'}}>
+            <form>
+              <div style={{display: 'flex'}}>
+
+                <div>
+                  <input type="text" value={this.state.cashflowAnalysisBusinessName} onChange={this.handleCashflowAnalysisChangeBusinessName} />
+                  <label className="Text-Label-Style">Business Name</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisFiscalYearSales} onChange={this.handleCashflowAnalysisChangeFiscalYearSales} />
+                  <label className="Text-Label-Style">Fiscal Year Sales</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisNetOperatingIncome} onChange={this.handleCashflowAnalysisChangeNetOperatingIncome} />
+                  <label className="Text-Label-Style">Net Operating Income</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisOwnerSalary} onChange={this.handleCashflowAnalysisChangeOwnerSalary} />
+                  <label className="Text-Label-Style">Owner's Salary</label>
+                </div>
+
+              </div>
+
+              <p style={{fontSize: 25, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>Fringe Benefits</p>
+
+              <div style={{display: 'flex'}}>
+
+                <div>
+                  <input type="text" value={this.state.cashflowAnalysisOwnerVehicle} onChange={this.handleCashflowAnalysisChangeOwnersVehicle} />
+                  <label className="Text-Label-Style">Owner's Vehicle</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisOwnerInsurance} onChange={this.handleCashflowAnalysisChangeOwnersInsurance} />
+                  <label className="Text-Label-Style">Owner's Insurance</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisOwnerMedical} onChange={this.handleCashflowAnalysisChangeOwnersMedical} />
+                  <label className="Text-Label-Style">Owner's Medical</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisOwnerPayrollTaxes} onChange={this.handleCashflowAnalysisChangeOwnersPayrollTaxes} />
+                  <label className="Text-Label-Style">Owner's Payroll Taxes</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisOwnerTravelEntertainment} onChange={this.handleCashflowAnalysisChangeOwnerTravelEntertainment} />
+                  <label className="Text-Label-Style">Owner's Travel/Entertainment</label>
+                </div>
+
+              </div>
+
+              <div style={{display: 'flex'}}>
+                <div>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessTelephone} onChange={this.handleCashflowAnalysisChangeNonBusinessTelephone} />
+                  <label className="Text-Label-Style">Non-Business Telephone</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessUtilities} onChange={this.handleCashflowAnalysisChangeNonBusinessUtilities} />
+                  <label className="Text-Label-Style">Non-Business Utilities</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessLegal} onChange={this.handleCashflowAnalysisChangeNonBusinessLegal} />
+                  <label className="Text-Label-Style">Non-Business Legal</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessAccounting} onChange={this.handleCashflowAnalysisChangeNonBusinessAccounting} />
+                  <label className="Text-Label-Style">Non-Business Accounting</label>
+                </div>
+
+              </div>
+
+              <p style={{fontSize: 25, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>Other</p>
+
+              <div style={{display: 'flex'}}>
+                <div>
+                  <input type="text" value={this.state.cashflowAnalysisInterestExpense} onChange={this.handleCashflowAnalysisChangeInterestExpense} />
+                  <label className="Text-Label-Style">Interest Expense</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisDeprecationAmortization} onChange={this.handleCashflowAnalysisChangeDepreciationAmortization} />
+                  <label className="Text-Label-Style">Depreciation/Amortization</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisPartnerFamilyExcessSalary} onChange={this.handleCashflowAnalysisChangePartnerFamilyExcessSalary} />
+                  <label className="Text-Label-Style">Partner/Family Excess Salary</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisNonRealSalaries} onChange={this.handleCashflowAnalysisChangeNonRealSalaries} />
+                  <label className="Text-Label-Style">Non Real Salaries</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input type="text" value={this.state.cashflowAnalysisFamilyBenefits} onChange={this.handleCashflowAnalysisChangeFamilyBenefits} />
+                  <label className="Text-Label-Style">Family Benefits</label>
+                </div>
+              </div>
+
+              <div style={{display: 'flex'}}>
+                <div>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisDonations} onChange={this.handleCashflowAnalysisChangeDonations} />
+                  <label className="Text-Label-Style">Donations</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonRecurring} onChange={this.handleCashflowAnalysisChangeNonRecurring} />
+                  <label className="Text-Label-Style">Non Recurring</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisRentAdjustments} onChange={this.handleCashflowAnalysisChangeRentAdjustments} />
+                  <label className="Text-Label-Style">Rent Adjustments</label>
+                </div>
+
+                <div style={{marginLeft: '2vh'}}>
+                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisInventoryAdjustments} onChange={this.handleCashflowAnalysisChangeInventoryAdjustments} />
+                  <label className="Text-Label-Style">Inventory Adjustments</label>
+                </div>
+              </div>
+
+            </form>
+
+          </div>
+
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <button className="Generate-Cashflow-PDF-Button" onClick={this.generateCashflow}>Generate PDF</button>
+          </div>
+          <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.cashflowAnalysisError}</p>
+        </div>
+      )
+    }
+  }
+
   generateConsentOfSpouse = () => {
 
     if(this.state.consentOfSpouseBusinessLocation === ""){
@@ -896,16 +1174,93 @@ export default class App extends PureComponent {
     var title = "Broker Confidentiality"
      
     var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 130px; font-size: 14px"><strong>The CBA Group, LLC &nbsp; 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278</strong></p><p style="text-indent: 0pt;text-align: left;"></p> <p style="width: 500px; margin-left: 150px; font-size: 20px"><strong>Broker Confidentiality Agreement</strong></p>'
-    var string2 = '<p style="font-size: 13px; width: 525px; margin-left: 40px; text-align: center;">The undersigned Business &nbsp; Broker and <strong>The CBA Group, LLC </strong>&nbsp;agree that all information provided by <u>' + this.state.brokerConfidentialityClientName + '</u>, and any of its affiliates, shall be held in strict confidence by the broker, its agents, officers, and employees. All financial statements and any other related information shall be used for the sole purpose of the valuation of the above named Company. The Company understands that if a photocopy of this information is sent to the valuation department of <strong>any selected Valuation Company</strong> they also shall maintain total confidentiality.'
-    var string3 = '<p style="font-size: 14px; width: 500px; margin-left: 50px">Signed and Agreed to this on the <u>' + this.state.brokerConfidentialityDay + '</u> day of <u>' + this.state.brokerConfidentialityMonth + ', ' + this.state.brokerConfidentialityYear + '</u>.'
+    var string2 = '<p style="font-size: 13px; width: 525px; margin-left: 40px; text-align: center;">The undersigned Business &nbsp; Broker and <strong>The CBA Group, LLC </strong>&nbsp;agree that all information provided by <strong>' + this.state.brokerConfidentialityClientName + '</strong>, and any of its affiliates, shall be held in strict confidence by the broker, its agents, officers, and employees. All financial statements and any other related information shall be used for the sole purpose of the valuation of the above named Company. The Company understands that if a photocopy of this information is sent to the valuation department of <strong>any selected Valuation Company</strong> they also shall maintain total confidentiality.'
+    var string3 = '<p style="font-size: 14px; width: 500px; margin-left: 50px">Signed and Agreed to this on the <strong>' + this.state.brokerConfidentialityDay + '</strong> day of <strong>' + this.state.brokerConfidentialityMonth + ', ' + this.state.brokerConfidentialityYear + '</strong>.'
     var string4 = '<p style="font-size: 13px; width: 500px; margin-left: 50px">Broker:</p>'
     var string5 = '<div style="width: 250px; margin-left: 50px; margin-top: 30px"><div style="border-top: 1px solid black"><p style="font-size: 13px; margin: 0px; padding: 0px">(Name)</p></div></div>'
     var address = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">20462 Chartwell Center Drive, Suite C</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(Address)</p>'
     var city = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">Cornelius, NC 28031</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(City/State/Zip)</p>'
     var telephone = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">(704) 895-4274</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(Telephone)</p>'
     var fax = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">(704) 895-4278</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(Fax)</p>'
+    var bottomNumber = '<p style="font-size: 10px; width: 100px; margin-left: 500px; margin-top: 25px">CBA111419</p>'
 
-    var finalString = string1 + string2 + string3 + string4 + string5 + address + city + telephone + fax
+    var finalString = string1 + string2 + string3 + string4 + string5 + address + city + telephone + fax + bottomNumber
+    
+
+    var width = doc.internal.pageSize.getWidth();
+    doc.addImage(cbaLogo2, 'png', width*0.3, 10, 250, 100)
+    doc.html(finalString, {
+      callback: function(doc) {
+        doc.save(title);
+      }
+    });
+  }
+
+  generateCashflow = () => {
+
+    /*if(this.state.brokerConfidentialityBrokerName === ""){
+      this.setState({brokerConfidentialityError: "Please enter a broker name"})
+      return
+    }
+    else if(this.state.brokerConfidentialityClientName === ""){
+      this.setState({brokerConfidentialityError: "Please enter a client name"})
+      return
+    }
+    else if(this.state.brokerConfidentialityDay === ""){
+      this.setState({brokerConfidentialityError: "Please select a day"})
+      return
+    }
+    else if(this.state.brokerConfidentialityMonth === ""){
+      this.setState({brokerConfidentialityError: "Please select a month"})
+      return
+    }
+    else if(this.state.brokerConfidentialityYear === ""){
+      this.setState({brokerConfidentialityError: "Please select a year"})
+      return
+    }
+    else{
+      this.setState({brokerConfidentialityError: ""})
+    }*/
+
+    var doc = new jsPDF('p', 'pt', 'letter')
+    var title = "Cashflow Analysis: " + this.state.cashflowAnalysisBusinessName 
+
+    var totalFringe = parseInt(this.state.cashflowAnalysisOwnerVehicle) + parseInt(this.state.cashflowAnalysisOwnerInsurance) + parseInt(this.state.cashflowAnalysisOwnerMedical) + parseInt(this.state.cashflowAnalysisOwnerPayrollTaxes) + parseInt(this.state.cashflowAnalysisOwnerTravelEntertainment) + parseInt(this.state.cashflowAnalysisNonBusinessTelephone) + parseInt(this.state.cashflowAnalysisNonBusinessUtilities) + parseInt(this.state.cashflowAnalysisNonBusinessLegal) + parseInt(this.state.cashflowAnalysisNonBusinessAccounting) 
+    var totalOther = parseInt(this.state.cashflowAnalysisPartnerFamilyExcessSalary) +  parseInt(this.state.cashflowAnalysisNonRealSalaries) +  parseInt(this.state.cashflowAnalysisFamilyBenefits) +  parseInt(this.state.cashflowAnalysisDonations) +  parseInt(this.state.cashflowAnalysisNonRecurring) +  parseInt(this.state.cashflowAnalysisRentAdjustments) +  parseInt(this.state.cashflowAnalysisInventoryAdjustments) 
+    var totalOwnerBenefitValue = parseInt(this.state.cashflowAnalysisNetOperatingIncome) + parseInt(this.state.cashflowAnalysisOwnerSalary) + totalFringe + totalOther + parseInt(this.state.cashflowAnalysisInterestExpense) + parseInt(this.state.cashflowAnalysisDeprecationAmortization)
+
+    var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 110px; font-size: 13px; margin-bottom: 0px"><strong>The CBA Group, LLC &nbsp; 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278</strong></p><p style="width: 500px; margin-left: 75px; font-size: 18px; margin-bottom: 5px"><strong>TOTAL &nbsp;OWNER BENEFIT &nbsp;“CASH FLOW” ANALYSIS </strong></p>'
+    var businessName = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 250px">Business &nbsp;Name:</p><p style="font-size: 12px; margin-bottom: 0px">' + this.state.cashflowAnalysisBusinessName + '</p></div>'
+    var fiscalYearSales = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 250px">Fiscal &nbsp;Year &nbsp;Sales:&nbsp;</p><p style="font-size: 12px; margin-bottom: 0px">$' + this.state.cashflowAnalysisFiscalYearSales + '</p></div>'
+    var netOperatingIncome = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 350px">Net Operating Income for fiscal year ending</p><p style="font-size: 12px; margin: 0px">+$' + this.state.cashflowAnalysisNetOperatingIncome + '</p></div>'
+    var ownerSalary = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 350px">Owners Salary per P&L only</p><p style="font-size: 12px; margin-bottom: 0px">+$' + this.state.cashflowAnalysisOwnerSalary + '</p></div>'
+    var fringeBenefits = '<p style="font-size: 13px; width: 200px; margin-left: 50px; margin-top: 5px; margin-bottom: 0px">Fringe Benefits</p>'
+    var ownerVehicle = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Vehicle</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerVehicle + '</p></div>'
+    var ownerInsurance = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Insurance</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerInsurance + '</p></div>'
+    var ownerMedical = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Medical</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerMedical + '</p></div>'
+    var ownerPayrollTaxes = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Payroll Taxes</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerPayrollTaxes + '</p></div>'
+    var ownerTravelEntertainment = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Travel&nbsp;/Entertainment</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerTravelEntertainment + '</p></div>'
+    var nonBusinessTelephone = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Telephone</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessTelephone + '</p></div>'
+    var nonBusinessUtilities = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Utilities</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessUtilities + '</p></div>'
+    var nonBusinessLegal = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Legal</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessLegal + '</p></div>'
+    var nonBusinessAccounting = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Accounting</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessAccounting + '</p></div>'
+    var totalFringeText = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Total Fringe</p><p style="font-size: 12px; margin-bottom: 0px">+$' + totalFringe + '</p></div>'
+    var interestExpense = '<div style="width: 500px; margin-left: 50px; display: flex; margin-top: 5px"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Interest Expense</p><p style="font-size: 12px; margin-bottom: 0px">+$' + this.state.cashflowAnalysisInterestExpense + '</p></div>'
+    var depreciationAmortization = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Depreciation/Amortization</p><p style="font-size: 12px; margin-bottom: 0px">+$' + this.state.cashflowAnalysisDeprecationAmortization + '</p></div>'
+    var otherTitle = '<p style="margin-left: 50px; font-size: 13px; margin-bottom: 0px; width: 200px; margin-top: 5px">Other</p>'
+    var partnerFamilyExcessSalary = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Partner/Family Excess &nbsp;Salary</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisPartnerFamilyExcessSalary + '</p></div>'
+    var nonRealSalaries = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non Real &nbsp;Salaries</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonRealSalaries + '</p></div>'
+    var familyBenefits = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Family Benefits</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisFamilyBenefits + '</p></div>'
+    var donations = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Donations</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisDonations + '</p></div>'
+    var nonRecurring = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non Recurring</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonRecurring + '</p></div>'
+    var rentAdjustments = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Rent Adjustments</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisRentAdjustments + '</p></div>'
+    var inventoryAdjustments = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin-bottom: 0px; width: 225px">Inventory Adjustments</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisInventoryAdjustments + '</p></div>'
+    var totalOther = '<div style="width: 500px; margin-left: 50px; display: flex; margin-top: 5px"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Total Other</p><p style="font-size: 12px; margin-bottom: 0px">+$' + totalOther + '</p></div>'
+    var totalOwnerBenefit = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 13px; margin-bottom: 0px; width: 350px; text-align: left">Total Owner Benefit/Cashflow</p><p style="margin-left: 20px; font-size: 12px; margin: 0px">=$' + totalOwnerBenefitValue + '</p></div>'
+    var bottomSignatures = '<div style="margin-left: 50px; margin-top: 30px; width: 500px; display: flex"><div style="width: 40%"><div style="border-top: 1px solid black"><p style="font-size: 13px; margin-bottom: 0px">Owner Signature</p></div></div><div style="width: 40%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 13px; margin-bottom: 0px">Owner Printed Name</p></div></div><div style="width: 20%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 13px; margin-bottom: 0px">Date</p></div></div></div>'
+    var bottomNote = '<p style="font-size: 9px; width: 500px; margin-left: 50px; margin-bottom: 0px">CONFIDENTIALITY INFORMATION: This information is taken from sources provided by the Owner and is not warranted or guaranteed by the Broker(s) and is subject to corrections and/or changes by Owner.</p>'
+    var bottomNumber = '<p style="font-size: 10px; width: 100px; margin-left: 500px">CBA103019</p>'
+    var finalString = string1 + businessName + fiscalYearSales + netOperatingIncome + ownerSalary + fringeBenefits + ownerVehicle + ownerInsurance + ownerMedical + ownerPayrollTaxes + ownerTravelEntertainment + nonBusinessTelephone + nonBusinessUtilities + nonBusinessLegal + nonBusinessAccounting +  totalFringeText + interestExpense + depreciationAmortization + otherTitle + partnerFamilyExcessSalary + nonRealSalaries + familyBenefits + donations + nonRecurring + rentAdjustments + inventoryAdjustments + totalOther + totalOwnerBenefit + bottomSignatures + bottomNote + bottomNumber
     
 
     var width = doc.internal.pageSize.getWidth();
@@ -921,7 +1276,8 @@ export default class App extends PureComponent {
     if(this.state.blisVisible === false && 
       this.state.consentOfSpouseVisible === false &&
       this.state.corporateResolutionToSellVisible === false &&
-      this.state.brokerConfidentialityVisible === false){
+      this.state.brokerConfidentialityVisible === false &&
+      this.state.cashflowAnalysisVisible === false){
         return(
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh'}}>
             <div style={{display: 'flex'}}>
@@ -932,7 +1288,7 @@ export default class App extends PureComponent {
               </div>
               <div style={{marginTop: '5vh', marginLeft: '10vh'}}>
                 <button className="Contract-Button" onClick={this.displaybrokerConfidentiality}>Broker Confidentiality</button>
-                <button disabled={true} className="Contract-Button" onClick={this.displaybrokerConfidentiality}>Cashflow Analysis</button>
+                <button className="Contract-Button" onClick={this.displayCashflowAnalysis}>Cashflow Analysis</button>
                 <button disabled={true} className="Contract-Button" onClick={this.displaybrokerConfidentiality}>Partners Consent To Sell</button>
               </div>
             </div>
@@ -946,6 +1302,7 @@ export default class App extends PureComponent {
           {this.renderConsentOfSpouse()}
           {this.renderCorporateResolutionToSell()}
           {this.renderbrokerConfidentiality()}
+          {this.renderCashflowAnalysis()}
         </div>
       )
     }

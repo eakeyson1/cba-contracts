@@ -40,6 +40,7 @@
   margin-left: 5vh;
   display: block;
   font-size: 18px;
+  width: 50vh
 }
 
 .Generate-PDF-Button {
@@ -55,6 +56,21 @@
   transition: ease background-color 250ms;
   font-weight: bold;
   margin-top: 10vh;
+}
+
+.Generate-Cashflow-PDF-Button {
+  background-color: #45aa42;
+  padding: 10px 25px;
+  color: white;
+  border-radius: 5px;
+  outline: 0;
+  text-transform: uppercase;
+  margin: 10px 0px;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  font-weight: bold;
+  margin-top: 3vh;
 }
 
 .App-header {
