@@ -111,15 +111,3 @@
   }
 }
 
-@font-face {
-  font-family: 'brush_script_mtitalic';
-  src: url('brushsci-webfont.woff2') format('woff2'),
-       url('brushsci-webfont.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
-.Cursive{
-  font-family: Brush Script MT;
-}
-
