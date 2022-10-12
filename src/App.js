@@ -1,5 +1,6 @@
 import React, { PureComponent } from "react";
 import jsPDF from "jspdf";
+import html2pdf from "html2pdf.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import CBALogoForHeader from './CBALogoForHeader.png'
 import cbaLogo2 from './CBALogo2.png';
@@ -9,6 +10,12 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import './BRUSHSCI.ttf'
+
+//<script src="~/Cairo-Regular-normal.js"></script>
+
+
+
 
 export default class App extends PureComponent {
 //class App extends React.Component {
@@ -27,9 +34,9 @@ export default class App extends PureComponent {
         consentOfSpouseSpouseName: "",
         consentOfSpouseBusinessName: "",
         consentOfSpouseBusinessLocation: "",
-        consentOfSpouseDay: "",
-        consentOfSpouseMonth: "",
-        consentOfSpouseYear: "",
+        consentOfSpouseDay: "Select",
+        consentOfSpouseMonth: "Select",
+        consentOfSpouseYear: "Select",
         consentOfSpouseError: "",
 
         /////   Corporate Resolution to Sell   /////    
@@ -37,42 +44,45 @@ export default class App extends PureComponent {
         corporateResolutionToSellBusinessCity: "",
         corporateResolutionToSellBusinessCounty: "",
         corporateResolutionToSellEmployeeName: "",
-        corporateResolutionToSellDay: "",
-        corporateResolutionToSellMonth: "",
-        corporateResolutionToSellYear: "",
+        corporateResolutionToSellDay: "Select",
+        corporateResolutionToSellMonth: "Select",
+        corporateResolutionToSellYear: "Select",
         corporateResolutionToSellError: "",
 
         /////   Broker Confidentiality   /////    
         brokerConfidentialityClientName: "",
         brokerConfidentialityBrokerName: "",
-        brokerConfidentialityDay: "",
-        brokerConfidentialityMonth: "",
-        brokerConfidentialityYear: "",
+        brokerConfidentialityDay: "Select",
+        brokerConfidentialityMonth: "Select",
+        brokerConfidentialityYear: "Select",
         brokerConfidentialityError: "",
 
         /////   Cashflow Analysis   /////
         cashflowAnalysisBusinessName: "",
-        cashflowAnalysisFiscalYearSales: "",
-        cashflowAnalysisNetOperatingIncome: "",
-        cashflowAnalysisOwnerSalary: "",
-        cashflowAnalysisOwnerVehicle: "",
-        cashflowAnalysisOwnerInsurance: "",
-        cashflowAnalysisOwnerMedical: "",
-        cashflowAnalysisOwnerPayrollTaxes: "",
-        cashflowAnalysisOwnerTravelEntertainment: "",
-        cashflowAnalysisNonBusinessTelephone: "",
-        cashflowAnalysisNonBusinessUtilities: "",
-        cashflowAnalysisNonBusinessLegal: "",
-        cashflowAnalysisNonBusinessAccounting: "",
-        cashflowAnalysisInterestExpense: "",
-        cashflowAnalysisDeprecationAmortization: "",
-        cashflowAnalysisPartnerFamilyExcessSalary: "",
-        cashflowAnalysisNonRealSalaries: "",
-        cashflowAnalysisFamilyBenefits: "",
-        cashflowAnalysisDonations: "",
-        cashflowAnalysisNonRecurring: "",
-        cashflowAnalysisRentAdjustments: "",
-        cashflowAnalysisInventoryAdjustments: "",
+        cashflowAnalysisFiscalYearSales: "0",
+        cashflowAnalysisFiscalSalesDay: "Select",
+        cashflowAnalysisFiscalSalesMonth: "Select",
+        cashflowAnalysisFiscalSalesYear: "Select",
+        cashflowAnalysisNetOperatingIncome: "0",
+        cashflowAnalysisOwnerSalary: "0",
+        cashflowAnalysisOwnerVehicle: "0",
+        cashflowAnalysisOwnerInsurance: "0",
+        cashflowAnalysisOwnerMedical: "0",
+        cashflowAnalysisOwnerPayrollTaxes: "0",
+        cashflowAnalysisOwnerTravelEntertainment: "0",
+        cashflowAnalysisNonBusinessTelephone: "0",
+        cashflowAnalysisNonBusinessUtilities: "0",
+        cashflowAnalysisNonBusinessLegal: "0",
+        cashflowAnalysisNonBusinessAccounting: "0",
+        cashflowAnalysisInterestExpense: "0",
+        cashflowAnalysisDeprecationAmortization: "0",
+        cashflowAnalysisPartnerFamilyExcessSalary: "0",
+        cashflowAnalysisNonRealSalaries: "0",
+        cashflowAnalysisFamilyBenefits: "0",
+        cashflowAnalysisDonations: "0",
+        cashflowAnalysisNonRecurring: "0",
+        cashflowAnalysisRentAdjustments: "0",
+        cashflowAnalysisInventoryAdjustments: "0",
         cashflowAnalysisError: "",
 
     };
@@ -81,6 +91,8 @@ export default class App extends PureComponent {
     this.displayCorporateResolutionToSell = this.displayCorporateResolutionToSell.bind(this);
     this.displaybrokerConfidentiality = this.displaybrokerConfidentiality.bind(this);
     this.displayCashflowAnalysis = this.displayCashflowAnalysis.bind(this);
+
+    this.separator = this.separator.bind(this);
 
     /////   Consent of Spouse   /////
     this.handleConsentOfSpouseChangePersonName = this.handleConsentOfSpouseChangePersonName.bind(this);
@@ -416,7 +428,7 @@ export default class App extends PureComponent {
     }
     else{
       return(
-        <DropdownButton disabled={true} alignRight title={this.state.consentOfSpouseDay} id="dropdown-menu-align-right">
+        <DropdownButton disabled={true} title={this.state.consentOfSpouseDay} id="dropdown-menu-align-right">
           <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "January"})}>January</Dropdown.Item>
         </DropdownButton>
       )
@@ -675,6 +687,132 @@ export default class App extends PureComponent {
     }
   }
 
+  renderCashflowAnalysisDropdown(){
+    if(this.state.cashflowAnalysisFiscalSalesMonth === "January" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "March" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "May" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "July" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "August" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "October" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "December"){
+      return(
+        <DropdownButton alignRight title={this.state.cashflowAnalysisFiscalSalesDay} id="dropdown-menu-align-right">
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "01"})}>1</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "02"})}>2</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "03"})}>3</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "04"})}>4</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "05"})}>5</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "06"})}>6</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "07"})}>7</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "08"})}>8</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "09"})}>9</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "10"})}>10</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "11"})}>11</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "12"})}>12</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "13"})}>13</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "14"})}>14</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "15"})}>15</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "16"})}>16</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "17"})}>17</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "18"})}>18</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "19"})}>19</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "20"})}>20</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "21"})}>21</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "22"})}>22</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "23"})}>23</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "24"})}>24</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "25"})}>25</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "26"})}>26</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "27"})}>27</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "28"})}>28</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "29"})}>29</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "30"})}>30</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "31"})}>31</Dropdown.Item>
+        </DropdownButton>
+      )
+    }
+    else if(this.state.cashflowAnalysisFiscalSalesMonth === "April" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "June" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "September" || 
+    this.state.cashflowAnalysisFiscalSalesMonth === "November"){
+      return(
+        <DropdownButton alignRight title={this.state.brokerConfidentialityDay} id="dropdown-menu-align-right">
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "01"})}>1</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "02"})}>2</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "03"})}>3</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "04"})}>4</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "05"})}>5</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "06"})}>6</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "07"})}>7</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "08"})}>8</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "09"})}>9</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "10"})}>10</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "11"})}>11</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "12"})}>12</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "13"})}>13</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "14"})}>14</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "15"})}>15</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "16"})}>16</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "17"})}>17</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "18"})}>18</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "19"})}>19</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "20"})}>20</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "21"})}>21</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "22"})}>22</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "23"})}>23</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "24"})}>24</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "25"})}>25</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "26"})}>26</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "27"})}>27</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "28"})}>28</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "29"})}>29</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "30"})}>30</Dropdown.Item>
+        </DropdownButton>
+      )
+    }
+    else if(this.state.cashflowAnalysisFiscalSalesMonth === "February"){
+      return(
+        <DropdownButton alignRight title={this.state.brokerConfidentialityDay} id="dropdown-menu-align-right">
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "01"})}>1</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "02"})}>2</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "03"})}>3</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "04"})}>4</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "05"})}>5</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "06"})}>6</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "07"})}>7</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "08"})}>8</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "09"})}>9</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "10"})}>10</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "11"})}>11</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "12"})}>12</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "13"})}>13</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "14"})}>14</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "15"})}>15</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "16"})}>16</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "17"})}>17</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "18"})}>18</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "19"})}>19</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "20"})}>20</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "21"})}>21</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "22"})}>22</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "23"})}>23</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "24"})}>24</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "25"})}>25</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "26"})}>26</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "27"})}>27</Dropdown.Item>
+          <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesDay: "28"})}>28</Dropdown.Item>
+        </DropdownButton>
+      )
+    }
+    else{
+      return(
+        <DropdownButton disabled={true} alignRight title={this.state.brokerConfidentialityDay} id="dropdown-menu-align-right">
+          <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "January"})}>January</Dropdown.Item>
+        </DropdownButton>
+      )
+    }
+  }
+
   renderBlis() {
     if(this.state.blisVisible === true){
       return(
@@ -696,61 +834,137 @@ export default class App extends PureComponent {
   renderConsentOfSpouse() {
     if(this.state.consentOfSpouseVisible === true){
       return(
-        <div style={{width: '60%', margin: '0 auto'}}>
-          <FaBackspace size={50} color="white" onClick={() => this.setState({consentOfSpouseVisible: false})}/>
-          <h1 style={{color: 'white', textAlign: 'center'}}>Consent Of Spouse</h1>
-
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '6vh'}}>
+        <div style={{display: 'flex'}}>
+          <div style={{width: '45%', marginLeft: '5%'}}>
             <div style={{display: 'flex'}}>
-              <form>
-                <input type="text" value={this.state.consentOfSpousePersonName} onChange={this.handleConsentOfSpouseChangePersonName} />
-                <label className="Text-Label-Style">Person Name</label>
-
-                <input className="Text-Input-Style" type="text" value={this.state.consentOfSpouseSpouseName} onChange={this.handleConsentOfSpouseChangeSpouseName} />
-                <label className="Text-Label-Style">Spouse Name</label>
-
-                <input className="Text-Input-Style" type="text" value={this.state.consentOfSpouseBusinessName} onChange={this.handleConsentOfSpouseChangeBusinessName} />
-                <label className="Text-Label-Style">Business Name</label>
-
-                <input className="Text-Input-Style" type="text" value={this.state.consentOfSpouseBusinessLocation} onChange={this.handleConsentOfSpouseChangeBusinessLocation} />
-                <label className="Text-Label-Style">Business Address</label>
-              </form>
-
-              <form style={{marginLeft: '10%'}}>
-
-                <DropdownButton alignRight title={this.state.consentOfSpouseMonth} id="dropdown-menu-align-right">
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "January"})}>January</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "February"})}>February</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "March"})}>March</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "April"})}>April</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "May"})}>May</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "June"})}>June</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "July"})}>July</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "August"})}>August</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "September"})}>September</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "October"})}>October</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "November"})}>November</Dropdown.Item>
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "December"})}>December</Dropdown.Item>
-                </DropdownButton>
-                <label className="Text-Label-Style">Month</label>
-
-                <div style={{marginTop: '2vh'}}>
-                  {this.renderConsentOfSpouseDayDropdown()}
-                  <label className="Text-Label-Style">Day</label>
-                </div>
-                <DropdownButton style={{marginTop: '2vh'}} alignRight title={this.state.consentOfSpouseYear} id="dropdown-menu-align-right">
-                  <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2022"})}>2022</Dropdown.Item>
-                </DropdownButton>
-                <label className="Text-Label-Style">Year</label>
-              </form>
+            <FaBackspace size={50} color="white" onClick={() => this.setState({consentOfSpouseVisible: false})}/>
+              <p style={{color: 'white', marginLeft: '10%', fontSize: 40, fontWeight: 'bold'}}>Consent Of Spouse</p>
             </div>
+
+            <div style={{alignItems: 'center', justifyContent: 'center', marginTop: '6vh'}}>
+              
+
+                <div style={{marginLeft: '20%', display: 'flex', marginTop: '3vh'}}>
+
+                  <div>
+                    <DropdownButton alignRight title={this.state.consentOfSpouseMonth} id="dropdown-menu-align-right">
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "January"})}>January</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "February"})}>February</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "March"})}>March</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "April"})}>April</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "May"})}>May</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "June"})}>June</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "July"})}>July</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "August"})}>August</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "September"})}>September</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "October"})}>October</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "November"})}>November</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseMonth: "December"})}>December</Dropdown.Item>
+                    </DropdownButton>
+                    <label style={{textAlign: 'center'}} className="Text-Label-Style">Month</label>
+                  </div>
+
+                  <div style={{marginLeft: '2vh'}}>
+                    {this.renderConsentOfSpouseDayDropdown()}
+                    <label style={{textAlign: 'center'}} className="Text-Label-Style">Day</label>
+                  </div>
+
+                  <div style={{marginLeft: '2vh'}}>
+                    <DropdownButton alignRight disabled={(this.state.consentOfSpouseDay === "Select" || this.state.consentOfSpouseMonth === "Select") ? true : false}  title={this.state.consentOfSpouseYear} id="dropdown-menu-align-right">
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2022"})}>2022</Dropdown.Item>
+                    </DropdownButton>
+                    <label style={{textAlign: 'center'}} className="Text-Label-Style">Year</label>
+                  </div>
+                </div>
+
+
+                <form style={{marginTop: '5%', marginLeft: '10%'}}>
+                  <div style={{display: 'flex'}}>
+                    <div>
+                      <input className="Text-Input-Style" type="text" value={this.state.consentOfSpousePersonName} onChange={this.handleConsentOfSpouseChangePersonName} />
+                      <label style={{textAlign: 'center'}} className="Text-Label-Style">Person Name</label>
+                    </div>
+
+                    <div style={{marginLeft: '3vh'}}>
+                      <input className="Text-Input-Style" type="text" value={this.state.consentOfSpouseBusinessName} onChange={this.handleConsentOfSpouseChangeBusinessName} />
+                      <label style={{textAlign: 'center'}} className="Text-Label-Style">Business Name</label>
+                    </div>
+                  </div>
+
+                  <div style={{display: 'flex'}}>
+                    <div>
+                      <input className="Text-Input-Style" type="text" value={this.state.consentOfSpouseSpouseName} onChange={this.handleConsentOfSpouseChangeSpouseName} />
+                      <label style={{textAlign: 'center'}} className="Text-Label-Style">Spouse Name</label>
+                    </div>
+
+                    <div style={{marginLeft: '3vh'}}>
+                      <input className="Text-Input-Style" type="text" value={this.state.consentOfSpouseBusinessLocation} onChange={this.handleConsentOfSpouseChangeBusinessLocation} />
+                      <label style={{textAlign: 'center'}} className="Text-Label-Style">Business Address</label>
+                    </div>
+                  </div>
+
+                </form>
+            </div>
+
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <button className="Generate-PDF-Button" onClick={this.generateConsentOfSpouse}>Generate PDF</button>
+            </div>
+            <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.consentOfSpouseError}</p>
+
           </div>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <button className="Generate-PDF-Button" onClick={this.generateConsentOfSpouse}>Generate PDF</button>
-          </div>
-          <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.consentOfSpouseError}</p>
+          <div id="consentOfSpouseContent" style={{width: '50%', backgroundColor: 'white'}}>
 
+            <img style={{height: 100, width: 210, marginLeft: 300, marginTop: 30}} src={cbaLogo2}></img>
+
+            <p style={{textAlign: 'center', marginLeft: 150, width: 500, marginTop: 20, fontSize: 14, fontWeight: 'bold'}}>
+              The CBA Group, LLC 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278
+            </p>
+
+            <p style={{width: 300, marginLeft: 300, fontSize: 25, fontWeight: 'bold'}}>
+              Consent Of Spouse
+            </p>
+
+            <p style={{fontSize: 16, width: 625, marginLeft: 75, textAlign: 'center', marginTop: 20}}>
+              Whereas I, <strong>{this.state.consentOfSpousePersonName}</strong> am the spouse of 
+              <strong> {this.state.consentOfSpouseSpouseName}</strong> and do hereby consent and 
+              agree to the following: My spouse may sign any and all documents necessary to close 
+              the business transaction involving the sale of the Business known as, 
+              <strong> {this.state.consentOfSpouseBusinessName}</strong> located at: 
+              <strong> {this.state.consentOfSpouseBusinessLocation}</strong> which may include real 
+              property, if any, associated with the Business.
+            </p>
+
+            <p style={{fontSize: 16, width: 500, marginLeft: 50, marginTop: 80}}>
+              Dated the <strong>{this.state.consentOfSpouseDay}</strong> day of 
+              <strong> {this.state.consentOfSpouseMonth}</strong>, 
+              <strong> {this.state.consentOfSpouseYear}</strong>
+            </p>
+
+            
+            <p style={{fontSize: 18, marginLeft: 50, textDecoration: "underline", marginTop: 15, marginBottom: 0, padding: 0}}>
+              {this.state.consentOfSpousePersonName}
+            </p>
+
+            <div style={{marginLeft: 50, display: "flex"}}>
+              <div style={{width: 300}}>
+                <p style={{fontSize: 18, width: 300}}>
+                  Printed Name
+                </p>
+              </div>
+
+              <div style={{width: 300, marginLeft: '5%', borderTop: "1px solid black"}}>
+                <p style={{width: 300, fontSize: 18}}>
+                  <em>
+                    Signature
+                  </em>
+                </p>
+              </div>
+            </div>
+
+            <p style={{fontSize: 12, width: 150, marginLeft: 550, marginTop: 450}}>CBA Form 102119</p>
+
+          </div>
         </div>
       )
     
@@ -761,29 +975,16 @@ export default class App extends PureComponent {
     if(this.state.corporateResolutionToSellVisible === true){
       return(
         <div style={{width: '60%', margin: '0 auto'}}>
-          <FaBackspace size={50} color="white" onClick={() => this.setState({corporateResolutionToSellVisible: false})}/>
-          <h1 style={{color: 'white', textAlign: 'center'}}>Corporate Resolution To Sell</h1>
+          <div style={{display: 'flex', marginTop: '3vh'}}>
+           <FaBackspace size={50} color="white" onClick={() => this.setState({corporateResolutionToSellVisible: false})}/>
+            <p style={{color: 'white', marginLeft: '20vh', fontSize: 40, fontWeight: 'bold'}}>Corporate Resolution To Sell</p>
+          </div>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '6vh'}}>
+          <div style={{ alignItems: 'center', justifyContent: 'center', marginTop: '6vh'}}>
 
-            <div style={{display: 'flex'}}>
-              <form>
-                <input type="text" value={this.state.corporateResolutionToSellBusinessName} onChange={this.handleCorporateResolutionToSellChangeBusinessName} />
-                <label className="Text-Label-Style">Business Name</label>
+            <div style={{marginLeft: '33%', display: 'flex'}}>
 
-                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellBusinessCity} onChange={this.handleCorporateResolutionToSellChangeBusinessCity} />
-                <label className="Text-Label-Style">Business City</label>
-
-                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellBusinessCounty} onChange={this.handleCorporateResolutionToSellChangeBusinessCounty} />
-                <label className="Text-Label-Style">Business County</label>
-
-                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellEmployeeName} onChange={this.handleCorporateResolutionToSellChangeEmployeeName} />
-                <label className="Text-Label-Style">Employee Name</label>
-
-              </form>
-
-              <form style={{marginLeft: '10%'}}>
-
+              <div>
                 <DropdownButton alignRight title={this.state.corporateResolutionToSellMonth} id="dropdown-menu-align-right">
                   <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellMonth: "January"})}>January</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellMonth: "February"})}>February</Dropdown.Item>
@@ -798,20 +999,46 @@ export default class App extends PureComponent {
                   <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellMonth: "November"})}>November</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellMonth: "December"})}>December</Dropdown.Item>
                 </DropdownButton>
-                <label className="Text-Label-Style">Month</label>
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Month</label>
+              </div>
 
-                <div style={{marginTop: '2vh'}}>
-                  {this.renderCorporateResolutionToSellDropdown()}
-                  <label className="Text-Label-Style">Day</label>
-                </div>
+              <div style={{marginLeft: '3vh'}}>
+                {this.renderCorporateResolutionToSellDropdown()}
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Day</label>
+              </div>
 
-                <DropdownButton style={{marginTop: '2vh'}} alignRight title={this.state.corporateResolutionToSellYear} id="dropdown-menu-align-right">
+              <div style={{marginLeft: '3vh'}}>
+                <DropdownButton alignRight title={this.state.corporateResolutionToSellYear} id="dropdown-menu-align-right">
                   <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellYear: "2022"})}>2022</Dropdown.Item>
                 </DropdownButton>
-                <label className="Text-Label-Style">Year</label>
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Year</label>
+              </div>
 
-              </form>
             </div>
+
+            <form style={{display: 'flex', marginTop: '4vh'}}>
+
+              <div>
+                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellBusinessName} onChange={this.handleCorporateResolutionToSellChangeBusinessName} />
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Business Name</label>
+              </div>
+
+              <div style={{marginLeft: '3vh'}}>
+                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellBusinessCity} onChange={this.handleCorporateResolutionToSellChangeBusinessCity} />
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Business City</label>
+              </div>
+
+              <div style={{marginLeft: '3vh'}}>
+                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellBusinessCounty} onChange={this.handleCorporateResolutionToSellChangeBusinessCounty} />
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Business County</label>
+              </div>
+
+              <div style={{marginLeft: '3vh'}}>
+                <input className="Text-Input-Style" type="text" value={this.state.corporateResolutionToSellEmployeeName} onChange={this.handleCorporateResolutionToSellChangeEmployeeName} />
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Employee Name</label>
+              </div>
+
+            </form>
           </div>
     
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -828,21 +1055,18 @@ export default class App extends PureComponent {
   renderbrokerConfidentiality() {
     if(this.state.brokerConfidentialityVisible === true){
       return(
-        <div style={{width: '60%', margin: '0 auto'}}>
-          <FaBackspace size={50} color="white" onClick={() => this.setState({brokerConfidentialityVisible: false})}/>
-          <h1 style={{color: 'white', textAlign: 'center'}}>Broker Confidentiality</h1>
+        <div style={{display: 'flex'}}>
+
+        <div style={{width: '55%', marginLeft: '5%'}}>
+           <div style={{display: 'flex', marginTop: '3vh'}}>
+           <FaBackspace size={50} color="white" onClick={() => this.setState({brokerConfidentialityVisible: false})}/>
+            <p style={{color: 'white', marginLeft: '10%', fontSize: 40, fontWeight: 'bold'}}>Broker Confidentiality</p>
+          </div>
+
           <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '6vh'}}>
-            <div style={{display: 'flex'}}>
-              <form>
-                <input type="text" value={this.state.brokerConfidentialityClientName} onChange={this.handleBrokerConfidentialityChangeClientName} />
-                <label className="Text-Label-Style">Client Name</label>
-
-                <input className="Text-Input-Style" type="text" value={this.state.brokerConfidentialityBrokerName} onChange={this.handleBrokerConfidentialityChangeBrokerName} />
-                <label className="Text-Label-Style">Broker Name</label>
-              </form>
-
-              <form style={{marginLeft: '10%'}}>
-
+            <div>
+            <div style={{display: 'flex', marginLeft: '15%'}}>
+              <div>
                 <DropdownButton alignRight title={this.state.brokerConfidentialityMonth} id="dropdown-menu-align-right">
                   <Dropdown.Item onClick={() => this.setState({brokerConfidentialityMonth: "January"})}>January</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({brokerConfidentialityMonth: "February"})}>February</Dropdown.Item>
@@ -857,20 +1081,34 @@ export default class App extends PureComponent {
                   <Dropdown.Item onClick={() => this.setState({brokerConfidentialityMonth: "November"})}>November</Dropdown.Item>
                   <Dropdown.Item onClick={() => this.setState({brokerConfidentialityMonth: "December"})}>December</Dropdown.Item>
                 </DropdownButton>
-                <label className="Text-Label-Style">Month</label>
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Month</label>
+              </div>
 
-                <div style={{marginTop: '2vh'}}>
-                  {this.renderbrokerConfidentialityDropdown()}
-                  <label className="Text-Label-Style">Day</label>
-                </div>
+              <div style={{marginLeft: '3vh'}}>
+                {this.renderbrokerConfidentialityDropdown()}
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Day</label>
+              </div>
 
-                <DropdownButton style={{marginTop: '2vh'}} alignRight title={this.state.brokerConfidentialityYear} id="dropdown-menu-align-right">
+              <div style={{marginLeft: '3vh'}}>
+                <DropdownButton alignRight disabled={(this.state.brokerConfidentialityDay === "Select" || this.state.brokerConfidentialityMonth === "Select") ? true : false} title={this.state.brokerConfidentialityYear} id="dropdown-menu-align-right">
                   <Dropdown.Item onClick={() => this.setState({brokerConfidentialityYear: "2022"})}>2022</Dropdown.Item>
                 </DropdownButton>
-                <label className="Text-Label-Style">Year</label>
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Year</label>
+              </div>
 
-              </form>
+            </div>
 
+            <form style={{display: 'flex', marginTop: '5%'}}>
+              <div>
+                <input className="Text-Input-Style"  type="text" value={this.state.brokerConfidentialityClientName} onChange={this.handleBrokerConfidentialityChangeClientName} />
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Client Name</label>
+              </div>
+
+              <div style={{marginLeft: '5vh'}}>
+                <input className="Text-Input-Style" type="text" value={this.state.brokerConfidentialityBrokerName} onChange={this.handleBrokerConfidentialityChangeBrokerName} />
+                <label style={{textAlign: 'center'}} className="Text-Label-Style">Broker Name</label>
+              </div>
+            </form>
             </div>
           </div>
 
@@ -879,157 +1117,571 @@ export default class App extends PureComponent {
           </div>
           <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.brokerConfidentialityError}</p>
         </div>
+
+        <div id="brokerConfidentialityContent" style={{width: '50%', backgroundColor: 'white'}}>
+
+          <img style={{height: 100, width: 210, marginLeft: 300, marginTop: 30}} src={cbaLogo2}></img>
+
+          <p style={{textAlign: 'center', marginLeft: 150, width: 500, marginTop: 20, fontSize: 14, fontWeight: 'bold'}}>
+            The CBA Group, LLC &nbsp; 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278
+          </p>
+
+          <p style={{width: 500, marginLeft: 210, fontSize: 25, fontWeight: 'bold'}}>
+            Broker Confidentiality Agreement
+          </p>
+
+          <p style={{fontsize: 12, width: 625, marginLeft: 75, textAlign: 'center'}}>
+            The undersigned Business Broker and <strong>The CBA Group, LLC </strong>
+            agree that all information provided by <strong> {this.state.brokerConfidentialityClientName} 
+            </strong>, and any of its affiliates, shall be held in strict confidence by the broker, its 
+            agents, officers, and employees. All financial statements and any other related information 
+            shall be used for the sole purpose of the valuation of the above named Company. The Company 
+            understands that if a photocopy of this information is sent to the valuation department of 
+            any selected Valuation Company they also shall maintain total confidentiality.
+          </p>
+          <p style={{fontSize: 14, width: 500, marginLeft: 50, marginTop: 30}}>
+            Signed and Agreed to this on the <strong> {this.state.brokerConfidentialityDay} </strong> 
+            day of <strong>{this.state.brokerConfidentialityMonth}, {this.state.brokerConfidentialityYear} 
+            </strong>.</p>
+          <p style={{fontSize: 13, width: 500, marginLeft: 50}}>
+            Broker:
+          </p>
+
+          <div style={{width: 250, marginLeft: 50}}>
+            <p style={{fontSize: 25, margin: 0, padding: 0, fontFamily: "Brush Script MT", textDecoration: "underline"}}>
+              {this.state.brokerConfidentialityBrokerName}
+            </p>
+            <div style={{borderTopWidth: 1, borderTopColor: 'black'}}>
+              <p style={{fontSize: 13, margin: 0, padding: 0}}>(Name)
+              </p>
+            </div>
+          </div>
+
+          <p style={{fontSize: 13, marginLeft: 50, width: 300, textDecoration: "underline", marginTop: 15, marginBottom: 0, padding: 0}}>
+            20462 Chartwell Center Drive, Suite C
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, marginTop: 0, marginBottom: 0, padding: 0}}>
+            (Address)
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, width: 300, textDecoration: "underline", marginTop: 15, marginBottom: 0, padding: 0}}>
+            Cornelius, NC 28031
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, marginTop: 0, marginBottom: 0, padding: 0}}>
+            (City/State/Zip)
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, width: 300, textDecoration: 'underline', marginTop: 15, marginBottom: 0, padding: 0}}>
+            (704) 895-4274
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, marginTop: 0, marginBottom: 0, padding: 0}}>
+            (Telephone)
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, width: 300, textDecoration: 'underline', marginTop: 15, marginBottom: 0, padding: 0}}>
+            (704) 895-4278
+          </p>
+
+          <p style={{fontSize: 13, marginLeft: 50, marginTop: 0, marginBottom: 0, padding: 0}}>
+            (Fax)
+          </p>
+
+          <p style={{fontSize: 12, width: 100, marginLeft: 600, marginTop: 190}}>CBA Form 2031</p>
+
+          </div>
+        </div>
       )
     }
   }
 
   renderCashflowAnalysis() {
     if(this.state.cashflowAnalysisVisible === true){
-      return(
-        <div style={{width: '65%', margin: '0 auto'}}>
-          <div style={{display: 'flex', marginTop: '3vh'}}>
-            <FaBackspace size={50} color="white" onClick={() => this.setState({cashflowAnalysisVisible: false})}/>
-            <p style={{color: 'white', marginLeft: '35vh', fontSize: 40, fontWeight: 'bold'}}>Cashflow Analysis</p>
-          </div>
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '3vh'}}>
-            <form>
-              <div style={{display: 'flex'}}>
 
+      var month = ""
+      if(this.state.cashflowAnalysisFiscalSalesMonth === "January"){
+        month = "01"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "February"){
+        month = "02"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "March"){
+        month = "03"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "April"){
+        month = "04"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "May"){
+        month = "05"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "June"){
+        month = "06"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "July"){
+        month = "07"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "August"){
+        month = "08"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "September"){
+        month = "09"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "October"){
+        month = "10"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "November"){
+        month = "11"
+      }
+      else if(this.state.cashflowAnalysisFiscalSalesMonth === "December"){
+        month = "12"
+      }
+
+      return(
+        <div style={{display: 'flex'}}>
+          <div style={{width: '55%', marginLeft: '5%'}}>
+            <div style={{display: 'flex'}}>
+              <FaBackspace size={50} color="white" onClick={() => this.setState({cashflowAnalysisVisible: false})}/>
+              <p style={{color: 'white', marginLeft: '35vh', fontSize: 40, fontWeight: 'bold'}}>Cashflow Analysis</p>
+            </div>
+            <p style={{color: 'white', fontWeight: 'bold', border: '1px solid white', width: '70%'}}>WHOLE NUMBERS ONLY, NO COMMAS OR DOLLAR SIGNS($)</p>
+            <div style={{alignItems: 'center', justifyContent: 'center', marginTop: '2vh'}}>
+
+              <div style={{display: 'flex'}}>
                 <div>
                   <input type="text" value={this.state.cashflowAnalysisBusinessName} onChange={this.handleCashflowAnalysisChangeBusinessName} />
                   <label className="Text-Label-Style">Business Name</label>
                 </div>
+                <div style={{display: 'flex', marginLeft: '5%'}}>
+                  <div style={{marginLeft: '2vh'}}>
+                    <DropdownButton alignRight title={this.state.cashflowAnalysisFiscalSalesMonth} id="dropdown-menu-align-right">
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "January"})}>January</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "February"})}>February</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "March"})}>March</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "April"})}>April</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "May"})}>May</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "June"})}>June</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "July"})}>July</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "August"})}>August</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "September"})}>September</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "October"})}>October</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "November"})}>November</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "December"})}>December</Dropdown.Item>
+                    </DropdownButton>
+                    <label className="Text-Label-Style">Month</label>
+                  </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisFiscalYearSales} onChange={this.handleCashflowAnalysisChangeFiscalYearSales} />
+                  <div style={{marginLeft: '2vh'}}>
+                    {this.renderCashflowAnalysisDropdown()}
+                    <label className="Text-Label-Style">Day</label>
+                  </div>
+
+                  <div style={{marginLeft: '2vh'}}>
+                    <DropdownButton alignRight disabled={(this.state.cashflowAnalysisFiscalSalesDay === "Select" || this.state.cashflowAnalysisFiscalSalesMonth === "Select") ? true : false} title={this.state.cashflowAnalysisFiscalSalesYear} id="dropdown-menu-align-right">
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2018"})}>2018</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2019"})}>2019</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2020"})}>2020</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2021"})}>2021</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2022"})}>2022</Dropdown.Item>
+                    </DropdownButton>
+                    <label className="Text-Label-Style">Year</label>
+                  </div>
+                </div>
+              </div>
+
+
+              <div style={{display: 'flex', marginTop: '4%'}}>
+                <div>
+                  <input style={{width: '15vh'}} type="text" value={this.state.cashflowAnalysisFiscalYearSales} onChange={this.handleCashflowAnalysisChangeFiscalYearSales} />
                   <label className="Text-Label-Style">Fiscal Year Sales</label>
                 </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisNetOperatingIncome} onChange={this.handleCashflowAnalysisChangeNetOperatingIncome} />
+                <div style={{marginLeft: '5%'}}>
+                  <input style={{width: '15vh'}} type="text" value={this.state.cashflowAnalysisNetOperatingIncome} onChange={this.handleCashflowAnalysisChangeNetOperatingIncome} />
                   <label className="Text-Label-Style">Net Operating Income</label>
                 </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisOwnerSalary} onChange={this.handleCashflowAnalysisChangeOwnerSalary} />
+                <div style={{marginLeft: '5%'}}>
+                  <input style={{width: '15vh'}} type="text" value={this.state.cashflowAnalysisOwnerSalary} onChange={this.handleCashflowAnalysisChangeOwnerSalary} />
                   <label className="Text-Label-Style">Owner's Salary</label>
                 </div>
-
               </div>
 
-              <p style={{fontSize: 25, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>Fringe Benefits</p>
+              <div style={{display: 'flex', marginTop: '4%'}}>
+                <div style={{width: '50%'}}>
+                  <p style={{fontSize: 25, color: 'white', fontWeight: 'bold'}}>Fringe Benefits</p>
+                  <div style={{marginLeft: '5%'}}>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Owner's Vehicle</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisOwnerVehicle} onChange={this.handleCashflowAnalysisChangeOwnersVehicle} />
+                    </div>
 
-              <div style={{display: 'flex'}}>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Owner's Insurance</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisOwnerInsurance} onChange={this.handleCashflowAnalysisChangeOwnersInsurance} />
+                    </div>
 
-                <div>
-                  <input type="text" value={this.state.cashflowAnalysisOwnerVehicle} onChange={this.handleCashflowAnalysisChangeOwnersVehicle} />
-                  <label className="Text-Label-Style">Owner's Vehicle</label>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Owner's Medical</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisOwnerMedical} onChange={this.handleCashflowAnalysisChangeOwnersMedical} />
+                    </div>
+
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Owner's Payroll Taxes</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisOwnerPayrollTaxes} onChange={this.handleCashflowAnalysisChangeOwnersPayrollTaxes} />
+                    </div>
+
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Owner's Travel/Entertainment</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisOwnerTravelEntertainment} onChange={this.handleCashflowAnalysisChangeOwnerTravelEntertainment} />
+                    </div>
+
+                    <div style={{display: 'flex', marginTop: '3vh'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Non-Business Telephone</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisNonBusinessTelephone} onChange={this.handleCashflowAnalysisChangeNonBusinessTelephone} />
+                    </div>
+
+                    
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Non-Business Utilities</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisNonBusinessUtilities} onChange={this.handleCashflowAnalysisChangeNonBusinessUtilities} />
+                    </div>
+
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Non-Business Legal</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisNonBusinessLegal} onChange={this.handleCashflowAnalysisChangeNonBusinessLegal} />
+                    </div>
+
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Non-Business Accounting</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisNonBusinessAccounting} onChange={this.handleCashflowAnalysisChangeNonBusinessAccounting} />
+                    </div>
+
+                  </div>
                 </div>
+                <div style={{width: '50%'}}>
+                  <p style={{fontSize: 25, color: 'white', fontWeight: 'bold'}}>Other</p>
+                  <div style={{marginLeft: '5%'}}>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Interest Expense</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisInterestExpense} onChange={this.handleCashflowAnalysisChangeInterestExpense} />
+                    </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisOwnerInsurance} onChange={this.handleCashflowAnalysisChangeOwnersInsurance} />
-                  <label className="Text-Label-Style">Owner's Insurance</label>
-                </div>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Depreciation/Amortization</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisDeprecationAmortization} onChange={this.handleCashflowAnalysisChangeDepreciationAmortization} />
+                    </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisOwnerMedical} onChange={this.handleCashflowAnalysisChangeOwnersMedical} />
-                  <label className="Text-Label-Style">Owner's Medical</label>
-                </div>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Partner/Family Excess Salary</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisPartnerFamilyExcessSalary} onChange={this.handleCashflowAnalysisChangePartnerFamilyExcessSalary} />
+                    </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisOwnerPayrollTaxes} onChange={this.handleCashflowAnalysisChangeOwnersPayrollTaxes} />
-                  <label className="Text-Label-Style">Owner's Payroll Taxes</label>
-                </div>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Non Real Salaries</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisNonRealSalaries} onChange={this.handleCashflowAnalysisChangeNonRealSalaries} />
+                    </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisOwnerTravelEntertainment} onChange={this.handleCashflowAnalysisChangeOwnerTravelEntertainment} />
-                  <label className="Text-Label-Style">Owner's Travel/Entertainment</label>
-                </div>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Family Benefits</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisFamilyBenefits} onChange={this.handleCashflowAnalysisChangeFamilyBenefits} />
+                    </div>
 
-              </div>
+                    <div style={{display: 'flex', marginTop: '3vh'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Donations</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisDonations} onChange={this.handleCashflowAnalysisChangeDonations} />
+                    </div>
 
-              <div style={{display: 'flex'}}>
-                <div>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessTelephone} onChange={this.handleCashflowAnalysisChangeNonBusinessTelephone} />
-                  <label className="Text-Label-Style">Non-Business Telephone</label>
-                </div>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Non Recurring</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisNonRecurring} onChange={this.handleCashflowAnalysisChangeNonRecurring} />
+                    </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessUtilities} onChange={this.handleCashflowAnalysisChangeNonBusinessUtilities} />
-                  <label className="Text-Label-Style">Non-Business Utilities</label>
-                </div>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Rent Adjustments</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisRentAdjustments} onChange={this.handleCashflowAnalysisChangeRentAdjustments} />
+                    </div>
 
-                <div style={{marginLeft: '2vh'}}>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessLegal} onChange={this.handleCashflowAnalysisChangeNonBusinessLegal} />
-                  <label className="Text-Label-Style">Non-Business Legal</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonBusinessAccounting} onChange={this.handleCashflowAnalysisChangeNonBusinessAccounting} />
-                  <label className="Text-Label-Style">Non-Business Accounting</label>
-                </div>
-
-              </div>
-
-              <p style={{fontSize: 25, color: 'white', fontWeight: 'bold', textAlign: 'center'}}>Other</p>
-
-              <div style={{display: 'flex'}}>
-                <div>
-                  <input type="text" value={this.state.cashflowAnalysisInterestExpense} onChange={this.handleCashflowAnalysisChangeInterestExpense} />
-                  <label className="Text-Label-Style">Interest Expense</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisDeprecationAmortization} onChange={this.handleCashflowAnalysisChangeDepreciationAmortization} />
-                  <label className="Text-Label-Style">Depreciation/Amortization</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisPartnerFamilyExcessSalary} onChange={this.handleCashflowAnalysisChangePartnerFamilyExcessSalary} />
-                  <label className="Text-Label-Style">Partner/Family Excess Salary</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisNonRealSalaries} onChange={this.handleCashflowAnalysisChangeNonRealSalaries} />
-                  <label className="Text-Label-Style">Non Real Salaries</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input type="text" value={this.state.cashflowAnalysisFamilyBenefits} onChange={this.handleCashflowAnalysisChangeFamilyBenefits} />
-                  <label className="Text-Label-Style">Family Benefits</label>
-                </div>
-              </div>
-
-              <div style={{display: 'flex'}}>
-                <div>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisDonations} onChange={this.handleCashflowAnalysisChangeDonations} />
-                  <label className="Text-Label-Style">Donations</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisNonRecurring} onChange={this.handleCashflowAnalysisChangeNonRecurring} />
-                  <label className="Text-Label-Style">Non Recurring</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisRentAdjustments} onChange={this.handleCashflowAnalysisChangeRentAdjustments} />
-                  <label className="Text-Label-Style">Rent Adjustments</label>
-                </div>
-
-                <div style={{marginLeft: '2vh'}}>
-                  <input className="Text-Input-Style" type="text" value={this.state.cashflowAnalysisInventoryAdjustments} onChange={this.handleCashflowAnalysisChangeInventoryAdjustments} />
-                  <label className="Text-Label-Style">Inventory Adjustments</label>
+                    <div style={{display: 'flex'}}>
+                      <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>Inventory Adjustments</label>
+                      <input className="Text-Input-Number-Style" type="text" value={this.state.cashflowAnalysisInventoryAdjustments} onChange={this.handleCashflowAnalysisChangeInventoryAdjustments} />
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
 
-            </form>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+              <button className="Generate-Cashflow-PDF-Button" onClick={this.generateCashflow}>Generate PDF</button>
+            </div>
+
+            <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.cashflowAnalysisError}</p>
 
           </div>
 
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-            <button className="Generate-Cashflow-PDF-Button" onClick={this.generateCashflow}>Generate PDF</button>
+          <div id="cashFlowContent" style={{width: '50%', backgroundColor: 'white'}}>
+
+            <img style={{height: 100, width: 210, marginLeft: 250, marginTop: 30}} src={cbaLogo2}></img>
+
+            <p style={{textAlign: 'center', marginLeft: 150, width: 400, marginTop: 10, fontSize: 13, marginBottom: 0, fontWeight: 'bold'}}>
+              The CBA Group, LLC &nbsp; 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278
+            </p>
+            <p style={{marginLeft: 135, fontSize: 18, marginBottom: 5, marginTop: 10}}>
+              <strong>
+                TOTAL OWNER BENEFIT “CASH FLOW” ANALYSIS 
+              </strong>
+            </p>
+
+            <p style={{fontSize: 12, marginLeft: 50, marginBottom: 0}}>
+              Business Name: {this.state.cashflowAnalysisBusinessName}
+            </p>
+
+            
+            
+            <div style={{width: 500, marginLeft: 50, display: 'flex'}}>
+              <p style={{fontSize: 12, margin: 0, width: 350}}>
+                Net Operating Income for fiscal year ending
+              </p>
+              <p style={{fontSize: 12, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNetOperatingIncome))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 50, display: 'flex'}}>
+              <p style={{fontSize: 12, margin: 0, width: 350}}>
+                Owners Salary per P&L only
+              </p>
+              <p style={{fontSize: 12, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisOwnerSalary))}
+              </p>
+            </div>
+
+            <p style={{fontSize: 13, width: 200, marginLeft: 50, marginTop: 5, marginBottom: 0}}>
+              Fringe Benefits
+            </p>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Owners Vehicle
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisOwnerVehicle))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Owners Insurance
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisOwnerInsurance))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Owners Medical
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisOwnerMedical))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Owners Payroll Taxes
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisOwnerPayrollTaxes))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Owners Travel/Entertainment
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisOwnerTravelEntertainment))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Non-Business Telephone
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNonBusinessTelephone))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Non-Business Utilities
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNonBusinessUtilities))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Non-Business Legal
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNonBusinessLegal))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+            <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Non-Business Accounting
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNonBusinessAccounting))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 12, margin: 0, width: 325}}>
+                Total Fringe
+              </p>
+              <p style={{fontSize: 12, margin: 0}}>
+                +${this.separator(parseInt(this.state.cashflowAnalysisOwnerVehicle) + parseInt(this.state.cashflowAnalysisOwnerInsurance) + parseInt(this.state.cashflowAnalysisOwnerMedical) + parseInt(this.state.cashflowAnalysisOwnerPayrollTaxes) + parseInt(this.state.cashflowAnalysisOwnerTravelEntertainment) + parseInt(this.state.cashflowAnalysisNonBusinessTelephone) + parseInt(this.state.cashflowAnalysisNonBusinessUtilities) + parseInt(this.state.cashflowAnalysisNonBusinessLegal) + parseInt(this.state.cashflowAnalysisNonBusinessAccounting))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 50, display: 'flex', marginTop: 5}}>
+            <p style={{fontSize: 12, margin: 0, width: 350}}>
+                Interest Expense
+              </p>
+              <p style={{fontSize: 12, margin: 0}}>
+                +${this.separator(parseInt(this.state.cashflowAnalysisInterestExpense))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 50, display: 'flex'}}>
+              <p style={{fontSize: 12, marginBottom: 0, width: 350}}>
+                Depreciation/Amortization
+              </p>
+              <p style={{fontSize: 12, margin: 0}}>
+                +${this.separator(parseInt(this.state.cashflowAnalysisDeprecationAmortization))}
+              </p>
+            </div>
+
+            <p style={{marginLeft: 50, fontSize: 13, marginBottom: 0, width: 200, marginTop: 5}}>
+              Other
+            </p>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Partner/Family Excess Salary
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisPartnerFamilyExcessSalary))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+            <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Non Real Salaries
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNonRealSalaries))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Family Benefits
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisFamilyBenefits))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Donations
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisDonations))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Non Recurring
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisNonRecurring))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Rent Adjustments
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisRentAdjustments))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 11, margin: 0, width: 225}}>
+                Inventory Adjustments
+              </p>
+              <p style={{fontSize: 11, margin: 0}}>
+                ${this.separator(parseInt(this.state.cashflowAnalysisInventoryAdjustments))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 50, display: 'flex', marginTop: 5}}>
+              <p style={{fontSize: 11, margin: 0, width: 350}}>
+                Total Other
+              </p>
+              <p style={{fontSize: 12, margin: 0}}>
+                +${this.separator(parseInt(this.state.cashflowAnalysisPartnerFamilyExcessSalary) +  parseInt(this.state.cashflowAnalysisNonRealSalaries) +  parseInt(this.state.cashflowAnalysisFamilyBenefits) +  parseInt(this.state.cashflowAnalysisDonations) +  parseInt(this.state.cashflowAnalysisNonRecurring) +  parseInt(this.state.cashflowAnalysisRentAdjustments) +  parseInt(this.state.cashflowAnalysisInventoryAdjustments))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 50, display: 'flex'}}>
+              <p style={{fontSize: 15, marginBottom: 0, width: 350, textAlign: 'left'}}>
+                Total Owner Benefit/Cashflow
+              </p>
+              <p style={{marginLeft: 20, fontSize: 15, margin: 0}}>
+                =${ this.separator(parseInt(this.state.cashflowAnalysisNetOperatingIncome) + parseInt(this.state.cashflowAnalysisOwnerSalary) + parseInt(this.state.cashflowAnalysisOwnerVehicle) + parseInt(this.state.cashflowAnalysisOwnerInsurance) + parseInt(this.state.cashflowAnalysisOwnerMedical) + parseInt(this.state.cashflowAnalysisOwnerPayrollTaxes) + parseInt(this.state.cashflowAnalysisOwnerTravelEntertainment) + parseInt(this.state.cashflowAnalysisNonBusinessTelephone) + parseInt(this.state.cashflowAnalysisNonBusinessUtilities) + parseInt(this.state.cashflowAnalysisNonBusinessLegal) + parseInt(this.state.cashflowAnalysisNonBusinessAccounting) + parseInt(this.state.cashflowAnalysisPartnerFamilyExcessSalary) +  parseInt(this.state.cashflowAnalysisNonRealSalaries) +  parseInt(this.state.cashflowAnalysisFamilyBenefits) +  parseInt(this.state.cashflowAnalysisDonations) +  parseInt(this.state.cashflowAnalysisNonRecurring) +  parseInt(this.state.cashflowAnalysisRentAdjustments) +  parseInt(this.state.cashflowAnalysisInventoryAdjustments) + parseInt(this.state.cashflowAnalysisInterestExpense) + parseInt(this.state.cashflowAnalysisDeprecationAmortization))}
+              </p>
+            </div>
+
+            <div style={{width: 500, marginLeft: 50, display: 'flex', marginTop: 30}}>
+              <div style={{borderTop: '1px solid black', width: '40%'}}>
+                <p style={{fontSize: 13, marginBottom: 0}}>
+                  Owner Signature
+                </p>
+              </div>
+
+              <div style={{borderTop: '1px solid black', width: '40%', marginLeft: '5%'}}>
+                <p style={{width: 300, fontSize: 13, marginBottom: 0}}>
+                  Owner Printed Name
+                </p>
+              </div>
+
+              <div style={{borderTop: '1px solid black', width: '20%', marginLeft: '5%'}}>
+                <p style={{width: 300, fontSize: 13, marginBottom: 0}}>
+                  Date
+                </p>
+              </div>
+            </div>
+
+            <p style={{fontSize: 9, width: 500, marginLeft: 50, marginBottom: 0}}>
+              CONFIDENTIALITY INFORMATION: This information is taken from sources provided by the 
+              Owner and is not warranted or guaranteed by the Broker(s) and is subject to corrections 
+              and/or changes by Owner.
+            </p>
+
+            <p style={{fontSize: 10, width: 100, marginLeft: 500}}>
+              CBA Form 103019
+            </p>
           </div>
-          <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.cashflowAnalysisError}</p>
         </div>
       )
     }
@@ -1069,24 +1721,14 @@ export default class App extends PureComponent {
       this.setState({consentOfSpouseError: ""})
     }
      
-    var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 150px">The CBA Group, LLC  20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895 -4274 - Fax: (704) 895 -427</p><p style="text-indent: 0pt;text-align: left;"></p> <h1 style="width: 450px; margin-left: 150px">Consent of Spouse</h1>'
-    var string2 = '<p style="font-size: 13px; width: 500px; margin-left: 50px; text-align: center;">Whereas I, <u>' + this.state.consentOfSpousePersonName + '</u> am the spouse of <u>' + this.state.consentOfSpouseSpouseName + '</u>and do hereby consent and agree to the following: My spouse may sign any and all documents necessary to close the business transaction involving the sale of the Business known as, <u>' + this.state.consentOfSpouseBusinessName + '</u> located at: <u>' + this.state.consentOfSpouseBusinessLocation + '</u>,  which may include real property, if any, associated with the Business.</p>'
-    var date = '<p style="font-size: 13px; width: 500px; margin-left: 50px; margin-top: 50px">Dated the <u>' + this.state.consentOfSpouseDay + '</u> day of <u>' + this.state.consentOfSpouseMonth + '</u>, ' + this.state.consentOfSpouseYear + '</p>'
-    var signature = '<div style="margin-left: 50px; margin-top: 100px; width: 500px; display: flex"><div style="width: 35%"><div style="border-top: 1px solid black"><p style="font-size: 15px;">Printed Name</p></div></div><div style="width: 50%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 15px"><em>Signature</em> Secretary of the Corporation</p></div></div></div>'
+    var element = document.getElementById('consentOfSpouseContent');
 
-    var finalString = string1 + string2 + date + signature
-    
-    var doc = new jsPDF('p', 'pt', 'letter')
-
-    var title = "Consent of Spouse: " + this.state.consentOfSpouseBusinessName
-
-    var width = doc.internal.pageSize.getWidth();
-    doc.addImage(cbaLogo2, 'png', width/4, 0, 300, 125)
-    doc.html(finalString, {
-      callback: function(doc) {
-        doc.save(title);
-      }
-    });
+    html2pdf(element, {
+      filename: 'Consent Of Spouse',
+      html2canvas: { scale: 2,  logging: true },
+      }).toPdf().get('pdf').then(function (pdf) {
+      window.open(pdf.output('bloburl'), '_blank');
+    })
   }
 
   generateCorporateResolutionToSell = () => {
@@ -1123,20 +1765,21 @@ export default class App extends PureComponent {
       this.setState({corporateResolutionToSellError: ""})
     }
      
-    var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 150px">The CBA Group, LLC  20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895 -4274 - Fax: (704) 895 -427</p><p style="text-indent: 0pt;text-align: left;"></p> <h2 style="width: 500px; margin-left: 100px">Corporate Resolution To Sell</h2>'
-    var string2 = '<p style="font-size: 13px; width: 525px; margin-left: 40px; text-align: center;">The undersigned, being the Secretary of <u>' + this.state.corporateResolutionToSellBusinessName + '</u>, a North Carolina Corporation and acting pursuant to North Carolina General Statutes Sections, does hereby certify that this is a true and correct resolution unanimously adopted by a joint meeting of the Shareholders and the Board of Directors of the Corporation, at a special business meeting held pursuant to notice duly given in the city of in the County of <u>' + this.state.corporateResolutionToSellBusinessCity + '</u>  in the County of <u>' + this.state.corporateResolutionToSellBusinessCounty + '</u>, North Carolina, on the <u>' + this.state.corporateResolutionToSellDay + '</u> day of ' + this.state.corporateResolutionToSellMonth + ', ' + this.state.corporateResolutionToSellYear + ', and this resolution will not be revoked by any subsequent action of the Board of Directors of the Corporation, but will remain in full force and effect.'
-    var string3 = '<p style="width: 500px; margin-left: 50px; font-size: 15px">BE IT RESOLVED that <u>' + this.state.corporateResolutionToSellEmployeeName + ' </u>of the Corporation is hereby authorized and directed with the full and complete authority to:</p>'
-    var string4 = '<ol style="width: 500px; margin-left: 50px;"><li style="font-size: 13px" data-list-text="1)"> <p style="font-size: 13px">Sell any or all assets of the Corporation.</p> </li><li style="font-size: 13px" data-list-text="2)"><p style="font-size: 13px">Execute an agreement to pay a fee to The CBA Group, LLC, and/or to The CBA Group Real Estate, in the event that the business and/or real property of the Corporation is disposed of under authority given to them in a Listing Contract, Commission Protection Plan or other Agreement.</p></li><li style="font-size: 13px" data-list-text="3)"> <p style="font-size: 13px">Execute a contract for the sale, lease or exchange of the assets of the Corporation at such price, term and conditions as he/she, in his/her sole discretion, deems acceptable and thereafter to execute any and all documents necessary to complete the sale, lease or exchange.</p></li></ol>'
-    var string5 = '<div style="margin-left: 50px; margin-top: 50px; width: 500px; display: flex"><div style="width: 35%"><div style="border-top: 1px solid black"><p style="font-size: 15px;">Printed Name</p></div></div><div style="width: 50%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 15px"><em>Signature</em> Secretary of the Corporation</p></div></div></div>'
+    var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 150px; font-size: 13px"><strong>The CBA Group, LLC &nbsp;20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274  Fax: (704) 895-4278</strong></p><p style="width: 450px; margin-left: 160px; font-size: 22px"><strong>Corporate Resolution To Sell</strong></p>'
+    var string2 = '<p style="font-size: 13px; width: 525px; margin-left: 40px; text-align: center;">The undersigned, being the Secretary of <strong>' + this.state.corporateResolutionToSellBusinessName + '</strong>, a North Carolina Corporation and acting pursuant to North Carolina General Statutes Sections, does hereby certify that this is a true and correct resolution unanimously adopted by a joint meeting of the Shareholders and the Board of Directors of the Corporation, at a special business meeting held pursuant to notice duly given in the city of <strong>' + this.state.corporateResolutionToSellBusinessCity + '</strong>  in the County of <strong>' + this.state.corporateResolutionToSellBusinessCounty + '</strong>, North Carolina, on the <strong>' + this.state.corporateResolutionToSellDay + '</strong> day of <strong>' + this.state.corporateResolutionToSellMonth + ', ' + this.state.corporateResolutionToSellYear + '</strong>, and this resolution will not be revoked by any subsequent action of the Board of Directors of the Corporation, but will remain in full force and effect.'
+    var string3 = '<p style="width: 500px; margin-left: 50px; font-size: 15px">BE &nbsp;IT RESOLVED&nbsp;&nbsp;&nbsp; that <strong>' + this.state.corporateResolutionToSellEmployeeName + ' </strong> of the Corporation is hereby authorized and directed with the full and complete authority to:</p>'
+    var string4 = '<ol style="width: 500px; margin-left: 50px;"><li style="font-size: 13px" data-list-text="1)"> <p style="font-size: 13px">Sell any or all assets&nbsp; of the Corporation.</p> </li><li style="font-size: 13px" data-list-text="2)"><p style="font-size: 13px">Execute&nbsp; an agreement to pay a fee to The CBA Group, LLC, and/or to The CBA Group Real Estate, in the event that the business and/or real property of the Corporation is disposed of under authority given to them in a Listing Contract, Commission Protection Plan or other Agreement.</p></li><li style="font-size: 13px" data-list-text="3)"> <p style="font-size: 13px">Execute&nbsp; a contract for the sale, lease or exchange of the assets&nbsp; of the Corporation at such price, term and conditions as he/she, in his/her sole discretion, deems acceptable and thereafter to execute any and all documents necessary&nbsp; to complete the sale, lease or exchange.</p></li></ol>'
+    var string5 = '<div style="margin-left: 50px; margin-top: 30px; width: 500px; display: flex"><div style="width: 35%"><div style="border-top: 1px solid black"><p style="font-size: 13px;">Printed Name</p></div></div><div style="width: 50%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 13px"><em>Signature</em> Secretary of the Corporation</p></div></div></div>'
+    var bottomNumber = '<p style="font-size: 10px; width: 100px; margin-left: 500px">CBA101719</p>'
 
-    var finalString = string1 + string2 + string3 + string4 + string5
+    var finalString = string1 + string2 + string3 + string4 + string5 + bottomNumber
     
     var doc = new jsPDF('p', 'pt', 'letter')
 
     var title = "Corporate Resolution To Sell: " + this.state.consentOfSpouseBusinessName
 
     var width = doc.internal.pageSize.getWidth();
-    doc.addImage(cbaLogo2, 'png', width/4, 0, 300, 125)
+    doc.addImage(cbaLogo2, 'png', width*0.3, 10, 250, 100)
     doc.html(finalString, {
       callback: function(doc) {
         doc.save(title);
@@ -1170,106 +1813,33 @@ export default class App extends PureComponent {
       this.setState({brokerConfidentialityError: ""})
     }
 
-    var doc = new jsPDF('p', 'pt', 'letter')
-    var title = "Broker Confidentiality"
-     
-    var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 130px; font-size: 14px"><strong>The CBA Group, LLC &nbsp; 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278</strong></p><p style="text-indent: 0pt;text-align: left;"></p> <p style="width: 500px; margin-left: 150px; font-size: 20px"><strong>Broker Confidentiality Agreement</strong></p>'
-    var string2 = '<p style="font-size: 13px; width: 525px; margin-left: 40px; text-align: center;">The undersigned Business &nbsp; Broker and <strong>The CBA Group, LLC </strong>&nbsp;agree that all information provided by <strong>' + this.state.brokerConfidentialityClientName + '</strong>, and any of its affiliates, shall be held in strict confidence by the broker, its agents, officers, and employees. All financial statements and any other related information shall be used for the sole purpose of the valuation of the above named Company. The Company understands that if a photocopy of this information is sent to the valuation department of <strong>any selected Valuation Company</strong> they also shall maintain total confidentiality.'
-    var string3 = '<p style="font-size: 14px; width: 500px; margin-left: 50px">Signed and Agreed to this on the <strong>' + this.state.brokerConfidentialityDay + '</strong> day of <strong>' + this.state.brokerConfidentialityMonth + ', ' + this.state.brokerConfidentialityYear + '</strong>.'
-    var string4 = '<p style="font-size: 13px; width: 500px; margin-left: 50px">Broker:</p>'
-    var string5 = '<div style="width: 250px; margin-left: 50px; margin-top: 30px"><div style="border-top: 1px solid black"><p style="font-size: 13px; margin: 0px; padding: 0px">(Name)</p></div></div>'
-    var address = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">20462 Chartwell Center Drive, Suite C</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(Address)</p>'
-    var city = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">Cornelius, NC 28031</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(City/State/Zip)</p>'
-    var telephone = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">(704) 895-4274</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(Telephone)</p>'
-    var fax = '<p style="font-size: 13px; margin-left: 50px; width: 300px; text-decoration: underline; margin-top: 15px; margin-bottom: 0px; padding: 0px">(704) 895-4278</p><p style="font-size: 13px; margin-left: 50px; margin-top: 0px; margin-bottom: 0px; padding: 0px">(Fax)</p>'
-    var bottomNumber = '<p style="font-size: 10px; width: 100px; margin-left: 500px; margin-top: 25px">CBA111419</p>'
+    var element = document.getElementById('brokerConfidentialityContent');
 
-    var finalString = string1 + string2 + string3 + string4 + string5 + address + city + telephone + fax + bottomNumber
-    
+    html2pdf(element, {
+      filename: 'Broker Confidentiality',
+      html2canvas: { scale: 2,  logging: true },
+      }).toPdf().get('pdf').then(function (pdf) {
+      window.open(pdf.output('bloburl'), '_blank');
+    })
 
-    var width = doc.internal.pageSize.getWidth();
-    doc.addImage(cbaLogo2, 'png', width*0.3, 10, 250, 100)
-    doc.html(finalString, {
-      callback: function(doc) {
-        doc.save(title);
-      }
-    });
   }
 
   generateCashflow = () => {
 
-    /*if(this.state.brokerConfidentialityBrokerName === ""){
-      this.setState({brokerConfidentialityError: "Please enter a broker name"})
-      return
-    }
-    else if(this.state.brokerConfidentialityClientName === ""){
-      this.setState({brokerConfidentialityError: "Please enter a client name"})
-      return
-    }
-    else if(this.state.brokerConfidentialityDay === ""){
-      this.setState({brokerConfidentialityError: "Please select a day"})
-      return
-    }
-    else if(this.state.brokerConfidentialityMonth === ""){
-      this.setState({brokerConfidentialityError: "Please select a month"})
-      return
-    }
-    else if(this.state.brokerConfidentialityYear === ""){
-      this.setState({brokerConfidentialityError: "Please select a year"})
-      return
-    }
-    else{
-      this.setState({brokerConfidentialityError: ""})
-    }*/
+    var element = document.getElementById('cashFlowContent');
 
-    var doc = new jsPDF('p', 'pt', 'letter')
-    var title = "Cashflow Analysis: " + this.state.cashflowAnalysisBusinessName 
+    html2pdf(element, {
+      filename: 'Cash Flow',
+      html2canvas: { scale: 2,  logging: true },
+      }).toPdf().get('pdf').then(function (pdf) {
+      window.open(pdf.output('bloburl'), '_blank');
+    })
+  }
 
-    var totalFringe = parseInt(this.state.cashflowAnalysisOwnerVehicle) + parseInt(this.state.cashflowAnalysisOwnerInsurance) + parseInt(this.state.cashflowAnalysisOwnerMedical) + parseInt(this.state.cashflowAnalysisOwnerPayrollTaxes) + parseInt(this.state.cashflowAnalysisOwnerTravelEntertainment) + parseInt(this.state.cashflowAnalysisNonBusinessTelephone) + parseInt(this.state.cashflowAnalysisNonBusinessUtilities) + parseInt(this.state.cashflowAnalysisNonBusinessLegal) + parseInt(this.state.cashflowAnalysisNonBusinessAccounting) 
-    var totalOther = parseInt(this.state.cashflowAnalysisPartnerFamilyExcessSalary) +  parseInt(this.state.cashflowAnalysisNonRealSalaries) +  parseInt(this.state.cashflowAnalysisFamilyBenefits) +  parseInt(this.state.cashflowAnalysisDonations) +  parseInt(this.state.cashflowAnalysisNonRecurring) +  parseInt(this.state.cashflowAnalysisRentAdjustments) +  parseInt(this.state.cashflowAnalysisInventoryAdjustments) 
-    var totalOwnerBenefitValue = parseInt(this.state.cashflowAnalysisNetOperatingIncome) + parseInt(this.state.cashflowAnalysisOwnerSalary) + totalFringe + totalOther + parseInt(this.state.cashflowAnalysisInterestExpense) + parseInt(this.state.cashflowAnalysisDeprecationAmortization)
-
-    var string1 = '<p style="text-align: center; margin-left: 50px; width: 500px; margin-top: 110px; font-size: 13px; margin-bottom: 0px"><strong>The CBA Group, LLC &nbsp; 20462 Chartwell Center Dr. Suite C, Cornelius, NC 28031 Phone: (704) 895-4274 Fax: (704) 895-4278</strong></p><p style="width: 500px; margin-left: 75px; font-size: 18px; margin-bottom: 5px"><strong>TOTAL &nbsp;OWNER BENEFIT &nbsp;“CASH FLOW” ANALYSIS </strong></p>'
-    var businessName = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 250px">Business &nbsp;Name:</p><p style="font-size: 12px; margin-bottom: 0px">' + this.state.cashflowAnalysisBusinessName + '</p></div>'
-    var fiscalYearSales = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 250px">Fiscal &nbsp;Year &nbsp;Sales:&nbsp;</p><p style="font-size: 12px; margin-bottom: 0px">$' + this.state.cashflowAnalysisFiscalYearSales + '</p></div>'
-    var netOperatingIncome = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 350px">Net Operating Income for fiscal year ending</p><p style="font-size: 12px; margin: 0px">+$' + this.state.cashflowAnalysisNetOperatingIncome + '</p></div>'
-    var ownerSalary = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin: 0px; width: 350px">Owners Salary per P&L only</p><p style="font-size: 12px; margin-bottom: 0px">+$' + this.state.cashflowAnalysisOwnerSalary + '</p></div>'
-    var fringeBenefits = '<p style="font-size: 13px; width: 200px; margin-left: 50px; margin-top: 5px; margin-bottom: 0px">Fringe Benefits</p>'
-    var ownerVehicle = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Vehicle</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerVehicle + '</p></div>'
-    var ownerInsurance = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Insurance</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerInsurance + '</p></div>'
-    var ownerMedical = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Medical</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerMedical + '</p></div>'
-    var ownerPayrollTaxes = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Payroll Taxes</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerPayrollTaxes + '</p></div>'
-    var ownerTravelEntertainment = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Owners Travel&nbsp;/Entertainment</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisOwnerTravelEntertainment + '</p></div>'
-    var nonBusinessTelephone = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Telephone</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessTelephone + '</p></div>'
-    var nonBusinessUtilities = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Utilities</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessUtilities + '</p></div>'
-    var nonBusinessLegal = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Legal</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessLegal + '</p></div>'
-    var nonBusinessAccounting = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non-Business &nbsp;Accounting</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonBusinessAccounting + '</p></div>'
-    var totalFringeText = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Total Fringe</p><p style="font-size: 12px; margin-bottom: 0px">+$' + totalFringe + '</p></div>'
-    var interestExpense = '<div style="width: 500px; margin-left: 50px; display: flex; margin-top: 5px"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Interest Expense</p><p style="font-size: 12px; margin-bottom: 0px">+$' + this.state.cashflowAnalysisInterestExpense + '</p></div>'
-    var depreciationAmortization = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Depreciation/Amortization</p><p style="font-size: 12px; margin-bottom: 0px">+$' + this.state.cashflowAnalysisDeprecationAmortization + '</p></div>'
-    var otherTitle = '<p style="margin-left: 50px; font-size: 13px; margin-bottom: 0px; width: 200px; margin-top: 5px">Other</p>'
-    var partnerFamilyExcessSalary = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Partner/Family Excess &nbsp;Salary</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisPartnerFamilyExcessSalary + '</p></div>'
-    var nonRealSalaries = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non Real &nbsp;Salaries</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonRealSalaries + '</p></div>'
-    var familyBenefits = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Family Benefits</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisFamilyBenefits + '</p></div>'
-    var donations = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Donations</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisDonations + '</p></div>'
-    var nonRecurring = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Non Recurring</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisNonRecurring + '</p></div>'
-    var rentAdjustments = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin: 0px; width: 225px">Rent Adjustments</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisRentAdjustments + '</p></div>'
-    var inventoryAdjustments = '<div style="width: 500px; margin-left: 75px; display: flex"><p style="font-size: 11px; margin-bottom: 0px; width: 225px">Inventory Adjustments</p><p style="font-size: 11px; margin: 0px">$' + this.state.cashflowAnalysisInventoryAdjustments + '</p></div>'
-    var totalOther = '<div style="width: 500px; margin-left: 50px; display: flex; margin-top: 5px"><p style="font-size: 12px; margin-bottom: 0px; width: 350px">Total Other</p><p style="font-size: 12px; margin-bottom: 0px">+$' + totalOther + '</p></div>'
-    var totalOwnerBenefit = '<div style="width: 500px; margin-left: 50px; display: flex"><p style="font-size: 13px; margin-bottom: 0px; width: 350px; text-align: left">Total Owner Benefit/Cashflow</p><p style="margin-left: 20px; font-size: 12px; margin: 0px">=$' + totalOwnerBenefitValue + '</p></div>'
-    var bottomSignatures = '<div style="margin-left: 50px; margin-top: 30px; width: 500px; display: flex"><div style="width: 40%"><div style="border-top: 1px solid black"><p style="font-size: 13px; margin-bottom: 0px">Owner Signature</p></div></div><div style="width: 40%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 13px; margin-bottom: 0px">Owner Printed Name</p></div></div><div style="width: 20%; margin-left: 5%"><div style="border-top: 1px solid black"><p style="width: 300px; font-size: 13px; margin-bottom: 0px">Date</p></div></div></div>'
-    var bottomNote = '<p style="font-size: 9px; width: 500px; margin-left: 50px; margin-bottom: 0px">CONFIDENTIALITY INFORMATION: This information is taken from sources provided by the Owner and is not warranted or guaranteed by the Broker(s) and is subject to corrections and/or changes by Owner.</p>'
-    var bottomNumber = '<p style="font-size: 10px; width: 100px; margin-left: 500px">CBA103019</p>'
-    var finalString = string1 + businessName + fiscalYearSales + netOperatingIncome + ownerSalary + fringeBenefits + ownerVehicle + ownerInsurance + ownerMedical + ownerPayrollTaxes + ownerTravelEntertainment + nonBusinessTelephone + nonBusinessUtilities + nonBusinessLegal + nonBusinessAccounting +  totalFringeText + interestExpense + depreciationAmortization + otherTitle + partnerFamilyExcessSalary + nonRealSalaries + familyBenefits + donations + nonRecurring + rentAdjustments + inventoryAdjustments + totalOther + totalOwnerBenefit + bottomSignatures + bottomNote + bottomNumber
-    
-
-    var width = doc.internal.pageSize.getWidth();
-    doc.addImage(cbaLogo2, 'png', width*0.3, 10, 250, 100)
-    doc.html(finalString, {
-      callback: function(doc) {
-        doc.save(title);
-      }
-    });
+  separator(numb) {
+    var str = numb.toString().split(".");
+    str[0] = str[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return str.join(".");
   }
 
   renderView(){
@@ -1311,11 +1881,7 @@ export default class App extends PureComponent {
   render() {
     return (
       <div style={{backgroundColor: "#3c4548", height: '100vh'}}>
-        <div style={{flex: 1, alignItems: 'center'}}>
-          <img style={{display: 'block', marginLeft: 'auto', marginRight: 'auto', width: '15%'}} src={CBALogoForHeader} alt="Logo" />
-        </div>
         {this.renderView()}
-       
       </div>
     )
   }
