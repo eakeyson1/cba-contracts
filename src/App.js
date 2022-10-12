@@ -1,8 +1,6 @@
 import React, { PureComponent } from "react";
 import jsPDF from "jspdf";
 import html2pdf from "html2pdf.js"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import CBALogoForHeader from './CBALogoForHeader.png'
 import cbaLogo2 from './CBALogo2.png';
 import { FaBackspace } from 'react-icons/fa';
 import DropdownButton from 'react-bootstrap/DropdownButton';
@@ -10,12 +8,6 @@ import Dropdown from 'react-bootstrap/Dropdown'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
-import './BRUSHSCI.ttf'
-
-//<script src="~/Cairo-Regular-normal.js"></script>
-
-
-
 
 export default class App extends PureComponent {
 //class App extends React.Component {
