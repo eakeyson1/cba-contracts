@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/cba-contracts/static/css/main.b05853a1.css",
-    "main.js": "/cba-contracts/static/js/main.6081ffc2.js",
+    "main.js": "/cba-contracts/static/js/main.e779a846.js",
     "static/js/703.b74fe645.chunk.js": "/cba-contracts/static/js/703.b74fe645.chunk.js",
     "static/js/258.9e93649a.chunk.js": "/cba-contracts/static/js/258.9e93649a.chunk.js",
     "static/js/787.fd1a1680.chunk.js": "/cba-contracts/static/js/787.fd1a1680.chunk.js",
@@ -11,13 +11,13 @@
     "static/media/CBALogo2.png": "/cba-contracts/static/media/CBALogo2.39e671cbb21d1c3b6a1d.png",
     "index.html": "/cba-contracts/index.html",
     "main.b05853a1.css.map": "/cba-contracts/static/css/main.b05853a1.css.map",
-    "main.6081ffc2.js.map": "/cba-contracts/static/js/main.6081ffc2.js.map",
+    "main.e779a846.js.map": "/cba-contracts/static/js/main.e779a846.js.map",
     "703.b74fe645.chunk.js.map": "/cba-contracts/static/js/703.b74fe645.chunk.js.map",
     "258.9e93649a.chunk.js.map": "/cba-contracts/static/js/258.9e93649a.chunk.js.map",
     "787.fd1a1680.chunk.js.map": "/cba-contracts/static/js/787.fd1a1680.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.b05853a1.css",
-    "static/js/main.6081ffc2.js"
+    "static/js/main.e779a846.js"
   ]
 }
