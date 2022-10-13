@@ -1,23 +1,20 @@
 {
   "files": {
-    "main.css": "/cba-contracts/static/css/main.b05853a1.css",
-    "main.js": "/cba-contracts/static/js/main.e779a846.js",
+    "main.css": "/cba-contracts/static/css/main.c2cf3c79.css",
+    "main.js": "/cba-contracts/static/js/main.0bcd9c43.js",
     "static/js/703.b74fe645.chunk.js": "/cba-contracts/static/js/703.b74fe645.chunk.js",
     "static/js/258.9e93649a.chunk.js": "/cba-contracts/static/js/258.9e93649a.chunk.js",
     "static/js/787.fd1a1680.chunk.js": "/cba-contracts/static/js/787.fd1a1680.chunk.js",
-    "static/media/BRUSHSCI.ttf": "/cba-contracts/static/media/BRUSHSCI.93e9d69a5e9aed4ebc49.ttf",
-    "static/media/brushsci-webfont.woff": "/cba-contracts/static/media/brushsci-webfont.7235743a3e6512fea11b.woff",
-    "static/media/brushsci-webfont.woff2": "/cba-contracts/static/media/brushsci-webfont.560a2af1bfcc76bcb1d6.woff2",
     "static/media/CBALogo2.png": "/cba-contracts/static/media/CBALogo2.39e671cbb21d1c3b6a1d.png",
     "index.html": "/cba-contracts/index.html",
-    "main.b05853a1.css.map": "/cba-contracts/static/css/main.b05853a1.css.map",
-    "main.e779a846.js.map": "/cba-contracts/static/js/main.e779a846.js.map",
+    "main.c2cf3c79.css.map": "/cba-contracts/static/css/main.c2cf3c79.css.map",
+    "main.0bcd9c43.js.map": "/cba-contracts/static/js/main.0bcd9c43.js.map",
     "703.b74fe645.chunk.js.map": "/cba-contracts/static/js/703.b74fe645.chunk.js.map",
     "258.9e93649a.chunk.js.map": "/cba-contracts/static/js/258.9e93649a.chunk.js.map",
     "787.fd1a1680.chunk.js.map": "/cba-contracts/static/js/787.fd1a1680.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.b05853a1.css",
-    "static/js/main.e779a846.js"
+    "static/css/main.c2cf3c79.css",
+    "static/js/main.0bcd9c43.js"
   ]
 }
