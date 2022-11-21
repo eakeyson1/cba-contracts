@@ -1306,11 +1306,11 @@ export default class App extends PureComponent {
               TOTAL OWNER BENEFIT “CASH FLOW” ANALYSIS 
             </p>
 
-            <p style={{fontSize: 16, marginLeft: 50, marginBottom: 0}}>
+            <p style={{fontSize: 16, marginLeft: 75, marginBottom: 0}}>
               Business Name: <strong>{this.state.cashflowAnalysisBusinessName}</strong>
             </p>
 
-            <div style={{width: 500, marginLeft: 50, display: 'flex'}}>
+            <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
               <p style={{fontSize: 16, margin: 0, width: 250}}>
                 Fiscal Year Sales
               </p>
@@ -1319,32 +1319,38 @@ export default class App extends PureComponent {
               </p>
             </div>
             
-            <div style={{width: 600, marginLeft: 50, display: 'flex'}}>
-              <p style={{fontSize: 16, margin: 0, width: 475}}>
+            <div style={{width: 600, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 15, margin: 0, width: 430}}>
                 Net Operating Income for fiscal year ending: {this.state.cashflowAnalysisFiscalSalesMonth}/{this.state.cashflowAnalysisFiscalSalesDay}/{this.state.cashflowAnalysisFiscalSalesYear}
               </p>
-              <p style={{fontSize: 16, margin: 0}}>
+              <p style={{fontSize: 15, margin: 0, width: 45}}>
+                . . . . . .
+              </p>
+              <p style={{fontSize: 16, margin: 0, fontWeight: 'bold'}}>
                 ${this.separator(parseInt(this.state.cashflowAnalysisNetOperatingIncome))}
               </p>
             </div>
 
-            <div style={{width: 600, marginLeft: 50, display: 'flex'}}>
-              <p style={{fontSize: 16, margin: 0, width: 475}}>
+            <div style={{width: 600, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 16, margin: 0, width: 200}}>
                 Owners Salary per P&L only
               </p>
-              <p style={{fontSize: 16, margin: 0}}>
+              <p style={{fontSize: 15, margin: 0, width: 275}}>
+                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              </p>
+              <p style={{fontSize: 16, margin: 0, fontWeight: 'bold'}}>
                 ${this.separator(parseInt(this.state.cashflowAnalysisOwnerSalary))}
               </p>
             </div>
 
-            <p style={{fontSize: 16, width: 200, marginLeft: 50, marginTop: 5, marginBottom: 0}}>
+            <p style={{fontSize: 16, width: 200, marginLeft: 75, marginTop: 5, marginBottom: 0}}>
               Fringe Benefits
             </p>
 
             {this.state.cashflowAnalysisInputArray.map((input, key) => {
               if(input.type === "Fringe"){
                 return(
-                  <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+                  <div style={{width: 500, marginLeft: 100, display: 'flex'}}>
                     <p style={{fontSize: 14, margin: 0, width: 225}}>
                       {input.title}
                     </p>
@@ -1356,41 +1362,50 @@ export default class App extends PureComponent {
               }
             })}
 
-            <div style={{width: 600, marginLeft: 75, display: 'flex'}}>
-              <p style={{fontSize: 15, margin: 0, width: 450, fontWeight: 'bold'}}>
+            <div style={{width: 600, marginLeft: 100, display: 'flex'}}>
+              <p style={{fontSize: 15, margin: 0, width: 90, fontWeight: 'bold'}}>
                 Total Fringe
               </p>
-              <p style={{fontSize: 15, margin: 0}}>
+              <p style={{fontSize: 15, margin: 0, width: 360}}>
+                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              </p>
+              <p style={{fontSize: 15, margin: 0, fontWeight: 'bold'}}>
                 +${this.separator(this.calculateTotalFringe())}
               </p>
             </div>
 
-            <div style={{width: 600, marginLeft: 50, display: 'flex', marginTop: 20}}>
-            <p style={{fontSize: 15, margin: 0, width: 475}}>
+            <div style={{width: 600, marginLeft: 75, display: 'flex', marginTop: 20}}>
+              <p style={{fontSize: 15, margin: 0, width: 115}}>
                 Interest Expense
               </p>
-              <p style={{fontSize: 15, margin: 0}}>
+              <p style={{fontSize: 15, margin: 0, width: 360}}>
+                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              </p>
+              <p style={{fontSize: 15, margin: 0, fontWeight: 'bold'}}>
                 +${this.separator(parseInt(this.state.cashflowAnalysisInterestExpense))}
               </p>
             </div>
 
-            <div style={{width: 600, marginLeft: 50, display: 'flex'}}>
-              <p style={{fontSize: 15, marginBottom: 0, width: 475}}>
+            <div style={{width: 600, marginLeft: 75, display: 'flex'}}>
+              <p style={{fontSize: 15, marginBottom: 0, width: 180}}>
                 Depreciation/Amortization
               </p>
-              <p style={{fontSize: 15, margin: 0}}>
+              <p style={{fontSize: 15, marginBottom: 0, width: 295}}>
+                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              </p>
+              <p style={{fontSize: 15, margin: 0, fontWeight: 'bold'}}>
                 +${this.separator(parseInt(this.state.cashflowAnalysisDeprecationAmortization))}
               </p>
             </div>
 
-            <p style={{marginLeft: 50, fontSize: 15, marginBottom: 0, width: 200, marginTop: 20}}>
+            <p style={{marginLeft: 75, fontSize: 15, marginBottom: 0, width: 200, marginTop: 20}}>
               Other
             </p>
 
             {this.state.cashflowAnalysisInputArray.map((input, key) => {
               if(input.type === "Other"){
                 return(
-                  <div style={{width: 500, marginLeft: 75, display: 'flex'}}>
+                  <div style={{width: 500, marginLeft: 100, display: 'flex'}}>
                     <p style={{fontSize: 14, margin: 0, width: 225}}>
                       {input.title}
                     </p>
@@ -1402,25 +1417,31 @@ export default class App extends PureComponent {
               }
             })}
 
-            <div style={{width: 600, marginLeft: 75, display: 'flex', marginTop: 5}}>
-              <p style={{fontSize: 15, margin: 0, width: 450, fontWeight: 'bold'}}>
+            <div style={{width: 600, marginLeft: 100, display: 'flex', marginTop: 5}}>
+              <p style={{fontSize: 15, margin: 0, width: 85, fontWeight: 'bold'}}>
                 Total Other
               </p>
-              <p style={{fontSize: 15, margin: 0}}>
+              <p style={{fontSize: 15, margin: 0, width: 365}}>
+                . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              </p>
+              <p style={{fontSize: 15, margin: 0, fontWeight: 'bold'}}>
                 +${this.separator(this.calculateTotalOther())}
               </p>
             </div>
 
-            <div style={{width: 600, marginLeft: 50, display: 'flex', marginTop: 10}}>
-              <p style={{fontSize: 17, marginBottom: 0, width: 475, fontWeight: 'bold'}}>
+            <div style={{width: 600, marginLeft: 75, display: 'flex', marginTop: 10}}>
+              <p style={{fontSize: 17, marginBottom: 0, width: 245, fontWeight: 'bold'}}>
                 Total Owner Benefit/Cashflow
               </p>
-              <p style={{marginLeft: 20, fontSize: 17, margin: 0}}>
+              <p style={{fontSize: 15, margin: 0, width: 230}}>
+                 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+              </p>
+              <p style={{marginLeft: 20, fontSize: 17, margin: 0, fontWeight: 'bold'}}>
                 =${this.separator(parseInt(this.state.cashflowAnalysisNetOperatingIncome) + parseInt(this.state.cashflowAnalysisOwnerSalary) + this.calculateTotalFringe() + this.calculateTotalOther() + parseInt(this.state.cashflowAnalysisInterestExpense) + parseInt(this.state.cashflowAnalysisDeprecationAmortization))}
               </p>
             </div>
 
-            <div style={{width: 580, marginLeft: 50, display: 'flex', marginTop: 30}}>
+            <div style={{width: 580, marginLeft: 50, display: 'flex', marginTop: 65}}>
               <div style={{borderTop: '1px solid black', width: 240}}>
                 <p style={{fontSize: 13, marginBottom: 0, width: 240}}>
                   Owner Signature
@@ -1446,7 +1467,7 @@ export default class App extends PureComponent {
               and/or changes by Owner.
             </p>
 
-            <p style={{fontSize: 10, width: 100, marginLeft: 600}}>
+            <p style={{fontSize: 10, width: 100, marginLeft: 625}}>
               CBA Form 103019
             </p>
           </div>
