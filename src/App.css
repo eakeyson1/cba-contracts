@@ -69,7 +69,7 @@
 
 .Generate-Cashflow-PDF-Button {
   background-color: #45aa42;
-  padding: 10px 25px;
+  padding: 15px 35px;
   color: white;
   border-radius: 5px;
   outline: 0;
@@ -80,6 +80,49 @@
   transition: ease background-color 250ms;
   font-weight: bold;
   margin-top: 3vh;
+}
+
+.edit-cashflow-inputs-button {
+  background-color: #0099FF;
+  padding: 2px 5px;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: 0;
+  text-transform: uppercase;
+  margin: 0px;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  margin-top: 2vh;
+}
+
+.add-row-cashflow-button {
+  background-color: green;
+  padding: 5px 15px;
+  color: white;
+  border-radius: 5px;
+  outline: 0;
+  text-transform: uppercase;
+  margin: 5px 0px;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
+  font-weight: bold;
+  margin-top: 3vh;
+}
+
+.delete-cash-flow-input-row{
+  background-color: red;
+  padding: 0px 2px;
+  margin: 0px 5px 0px 0px;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  outline: 0;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px lightgray;
+  transition: ease background-color 250ms;
 }
 
 .Text-Input-Number-Style{
