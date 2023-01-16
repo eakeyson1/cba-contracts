@@ -1286,7 +1286,6 @@ export default class App extends PureComponent {
                 <button className="edit-cashflow-inputs-button" onClick={() => this.setState({cashflowAnalysisEditInputsVisible: !this.state.cashflowAnalysisEditInputsVisible})}>Edit Titles</button>
               </div>
             </div>
-
             <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
               <button className="Generate-Cashflow-PDF-Button" onClick={this.generateCashflow}>Generate PDF</button>
             </div>
@@ -1467,7 +1466,7 @@ export default class App extends PureComponent {
               and/or changes by Owner.
             </p>
 
-            <p style={{fontSize: 10, width: 100, marginLeft: 625}}>
+            <p style={{fontSize: 10, width: 100, marginLeft: 575}}>
               CBA Form 103019
             </p>
           </div>
@@ -1602,6 +1601,32 @@ export default class App extends PureComponent {
   }
 
   generateCashflow = () => {
+
+    if(this.state.cashflowAnalysisBusinessName === ""){
+      this.setState({cashflowAnalysisError: "Please add a business name"})
+      return
+    }
+    if(this.state.cashflowAnalysisFiscalYearSales === ""){
+      this.setState({cashflowAnalysisError: "Please add business fiscal sales"})
+      return
+    }
+    if(this.state.cashflowAnalysisNetOperatingIncome === ""){
+      this.setState({cashflowAnalysisError: "Please add business net operating income"})
+      return
+    }
+    if(this.state.cashflowAnalysisFiscalSalesMonth === "Select"){
+      this.setState({cashflowAnalysisError: "Please select a month"})
+      return
+    }
+    if(this.state.cashflowAnalysisFiscalSalesDay === "Select"){
+      this.setState({cashflowAnalysisError: "Please select a day"})
+      return
+    }
+    if(this.state.cashflowAnalysisFiscalSalesYear === "Select"){
+      this.setState({cashflowAnalysisError: "Please select a year"})
+      return
+    }
+
 
     var element = document.getElementById('cashFlowContent');
 
