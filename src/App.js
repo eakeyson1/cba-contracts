@@ -1156,23 +1156,32 @@ export default class App extends PureComponent {
 
       return(
         <div style={{display: 'flex'}}>
-          <div style={{width: '55%', marginLeft: '2%'}}>
-            <div style={{display: 'flex'}}>
-              <FaBackspace size={50} color="white" onClick={() => this.setState({cashflowAnalysisVisible: false})}/>
-              <p style={{margin: '0px', color: 'white', marginLeft: '6vh', fontSize: 40, fontWeight: 'bold'}}>Cashflow Analysis</p>
-              <div style={{width: '30%', marginLeft: '3%', marginTop: '2%', border: '1px solid red', borderRadius: 5}}>
-                <p style={{fontSize: 13, margin: '2px 5px', color: 'red', fontWeight: 'bold', textAlign: 'center'}}>WHOLE NUMBERS ONLY, NO COMMAS OR DOLLAR SIGNS($)</p>
-              </div>
-            </div>
-            <div style={{alignItems: 'center', justifyContent: 'center', marginTop: '2vh'}}>
-
-              <div style={{display: 'flex'}}>
-                <div>
-                  <input style={{width: '22vw'}} type="text" value={this.state.cashflowAnalysisBusinessName} onChange={(event) => this.setState({cashflowAnalysisBusinessName: event.target.value})} />
-                  <label className="Text-Label-Style">Business Name</label>
+          <div style={{width: '50%'}}>
+            <div style={{marginLeft: '5%'}}>
+              <div style={{display: 'flex', marginTop: 15}}>
+                <div style={{width: '8%', marginTop: 4}}>
+                  <FaBackspace size={50} color="white" onClick={() => this.setState({cashflowAnalysisVisible: false})}/>
                 </div>
-                <div style={{display: 'flex', marginLeft: '5%'}}>
-                  <div style={{marginLeft: '2vh'}}>
+                <div style={{width: '92%'}}>
+                  <p style={{color: 'white', fontSize: 40, fontWeight: 'bold', textAlign: 'center'}}>Cashflow Analysis</p>
+                </div>
+              </div>
+
+              <div style={{alignItems: 'center', justifyContent: 'center', marginTop: '2vh'}}>
+
+                <div style={{display: 'flex'}}>
+                  <div style={{width: '50%'}}>
+                    <input style={{width: '100%'}} type="text" value={this.state.cashflowAnalysisBusinessName} onChange={(event) => this.setState({cashflowAnalysisBusinessName: event.target.value})} />
+                    <label className="Text-Label-Style">Business Name</label>
+                  </div>
+
+                  <div style={{width: '40%', marginLeft: '5%', border: '1px solid red', borderRadius: 5}}>
+                    <p style={{fontSize: 14, margin: '2px 5px', color: 'red', fontWeight: 'bold', textAlign: 'center'}}>WHOLE NUMBERS ONLY, NO COMMAS OR DOLLAR SIGNS($)</p>
+                  </div>
+                </div>
+
+                <div style={{display: 'flex', marginTop: '3%'}}>
+                  <div>
                     <DropdownButton alignRight title={this.state.cashflowAnalysisFiscalSalesMonth} id="dropdown-menu-align-right">
                       <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "January"})}>January</Dropdown.Item>
                       <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesMonth: "February"})}>February</Dropdown.Item>
@@ -1206,92 +1215,91 @@ export default class App extends PureComponent {
                     <label className="Text-Label-Style">Year</label>
                   </div>
                 </div>
-              </div>
 
-
-              <div style={{display: 'flex', marginTop: 5}}>
-                <div>
-                  <input style={{width: '10vh'}} type="text" value={this.state.cashflowAnalysisFiscalYearSales} onChange={(event) => this.setState({cashflowAnalysisFiscalYearSales: event.target.value})} />
-                  <label className="Text-Label-Style">Year Sales</label>
-                </div>
-                <div style={{marginLeft: '2%'}}>
-                  <input style={{width: '10vh'}} type="text" value={this.state.cashflowAnalysisNetOperatingIncome} onChange={(event) => this.setState({cashflowAnalysisNetOperatingIncome: event.target.value})} />
-                  <label className="Text-Label-Style">Net Income</label>
-                </div>
-                <div style={{marginLeft: '2%'}}>
-                  <input style={{width: '10vh'}} type="text" value={this.state.cashflowAnalysisOwnerSalary} onChange={(event) => this.setState({cashflowAnalysisOwnerSalary: event.target.value})} />
-                  <label className="Text-Label-Style">Owner's Salary</label>
-                </div>
-                <div style={{marginLeft: '10%'}}>
-                  <input style={{width: '10vh'}} type="text" value={this.state.cashflowAnalysisInterestExpense} onChange={(event) => this.setState({cashflowAnalysisInterestExpense: event.target.value})} />
-                  <label className="Text-Label-Style">Interest Expense</label>
-                </div>
-                <div style={{marginLeft: '2%'}}>
-                  <input style={{width: '10vh'}} type="text" value={this.state.cashflowAnalysisDeprecationAmortization} onChange={(event) => this.setState({cashflowAnalysisDeprecationAmortization: event.target.value})} />
-                  <label className="Text-Label-Style">Depreciation/Amortization</label>
-                </div>
-              </div>
-
-              <div style={{display: 'flex', marginTop: '1%'}}>
-                <div style={{width: '50%'}}>
-                  <p style={{fontSize: 25, color: 'white', fontWeight: 'bold'}}>Fringe Benefits</p>
-                  <div style={{marginLeft: '5%'}}>
-                    {this.state.cashflowAnalysisInputArray.map((input, key) => {
-                      if(input.type === "Fringe"){
-                        return(
-                          <div style={{display: 'flex', marginTop: '5px'}} key={key}>
-                            {this.state.cashflowAnalysisEditInputsVisible && (
-                              <button className="delete-cash-flow-input-row" onClick={() => this.deleteCashFlowInputRow(input.title)}><RiDeleteBin6Line/></button>
-                            )}
-                            {this.state.cashflowAnalysisEditInputsVisible ? (
-                              <input style={{width: '12vw'}} className="Text-Input-Number-Style" type="text" value={input.title} onChange={(event) => this.updateCashFlowAnalysisInputsTitle(event, input.id)} />
-                            ) : (
-                              <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>{input.title}</label>
-                            )}
-                            <input className="Text-Input-Number-Style" type="text" value={input.value} onChange={(event) => this.updateCashFlowAnalysisInputs(event, input.id)} />
-                          </div>
-                        )
-                      }
-                    })}
-
+                <div style={{display: 'flex', marginTop: '3%'}}>
+                  <div>
+                    <input style={{width: '13vh'}} type="text" value={this.state.cashflowAnalysisFiscalYearSales} onChange={(event) => this.setState({cashflowAnalysisFiscalYearSales: event.target.value})} />
+                    <label className="Text-Label-Style">Year Sales</label>
+                  </div>
+                  <div style={{marginLeft: '2%'}}>
+                    <input style={{width: '13vh'}} type="text" value={this.state.cashflowAnalysisNetOperatingIncome} onChange={(event) => this.setState({cashflowAnalysisNetOperatingIncome: event.target.value})} />
+                    <label className="Text-Label-Style">Net Income</label>
+                  </div>
+                  <div style={{marginLeft: '2%'}}>
+                    <input style={{width: '13vh'}} type="text" value={this.state.cashflowAnalysisOwnerSalary} onChange={(event) => this.setState({cashflowAnalysisOwnerSalary: event.target.value})} />
+                    <label className="Text-Label-Style">Owner's Salary</label>
                   </div>
                 </div>
-                <div style={{width: '50%'}}>
-                  <p style={{fontSize: 25, color: 'white', fontWeight: 'bold'}}>Other</p>
-                  <div style={{marginLeft: '5%'}}>
-                    {this.state.cashflowAnalysisInputArray.map((input, key) => {
-                      if(input.type === "Other"){
-                        return(
-                          <div style={{display: 'flex', marginTop: '5px'}} key={key}>
-                            {this.state.cashflowAnalysisEditInputsVisible && (
-                              <button className="delete-cash-flow-input-row" onClick={() => this.deleteCashFlowInputRow(input.title)}><RiDeleteBin6Line/></button>
-                            )}
-                             {this.state.cashflowAnalysisEditInputsVisible ? (
-                              <input style={{width: '12vw'}} className="Text-Input-Number-Style" type="text" value={input.title} onChange={(event) => this.updateCashFlowAnalysisInputsTitle(event, input.id)} />
-                            ) : (
-                              <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>{input.title}</label>
-                            )}
-                            <input className="Text-Input-Number-Style" type="text" value={input.value} onChange={(event) => this.updateCashFlowAnalysisInputs(event, input.id)} />
-                          </div>
-                        )
-                      }
-                    })}
+
+                <div style={{display: 'flex', marginTop: '3%'}}>
+                  <div>
+                    <input style={{width: '13vh'}} type="text" value={this.state.cashflowAnalysisInterestExpense} onChange={(event) => this.setState({cashflowAnalysisInterestExpense: event.target.value})} />
+                    <label className="Text-Label-Style">Interest Expense</label>
+                  </div>
+                  <div style={{marginLeft: '2%'}}>
+                    <input style={{width: '13vh'}} type="text" value={this.state.cashflowAnalysisDeprecationAmortization} onChange={(event) => this.setState({cashflowAnalysisDeprecationAmortization: event.target.value})} />
+                    <label className="Text-Label-Style">Depreciation/Amortization</label>
+                  </div>
+                </div>
+
+                <div style={{display: 'flex', marginTop: '1%'}}>
+                  <div style={{width: '50%'}}>
+                    <p style={{fontSize: 25, color: 'white', fontWeight: 'bold'}}>Fringe Benefits</p>
+                    <div style={{marginLeft: '5%'}}>
+                      {this.state.cashflowAnalysisInputArray.map((input, key) => {
+                        if(input.type === "Fringe"){
+                          return(
+                            <div style={{display: 'flex', marginTop: '5px'}} key={key}>
+                              {this.state.cashflowAnalysisEditInputsVisible && (
+                                <button className="delete-cash-flow-input-row" onClick={() => this.deleteCashFlowInputRow(input.title)}><RiDeleteBin6Line/></button>
+                              )}
+                              {this.state.cashflowAnalysisEditInputsVisible ? (
+                                <input style={{width: '12vw'}} className="Text-Input-Number-Style" type="text" value={input.title} onChange={(event) => this.updateCashFlowAnalysisInputsTitle(event, input.id)} />
+                              ) : (
+                                <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>{input.title}</label>
+                              )}
+                              <input className="Text-Input-Number-Style" type="text" value={input.value} onChange={(event) => this.updateCashFlowAnalysisInputs(event, input.id)} />
+                            </div>
+                          )
+                        }
+                      })}
+
+                    </div>
+                  </div>
+                  <div style={{width: '50%'}}>
+                    <p style={{fontSize: 25, color: 'white', fontWeight: 'bold'}}>Other</p>
+                    <div style={{marginLeft: '5%'}}>
+                      {this.state.cashflowAnalysisInputArray.map((input, key) => {
+                        if(input.type === "Other"){
+                          return(
+                            <div style={{display: 'flex', marginTop: '5px'}} key={key}>
+                              {this.state.cashflowAnalysisEditInputsVisible && (
+                                <button className="delete-cash-flow-input-row" onClick={() => this.deleteCashFlowInputRow(input.title)}><RiDeleteBin6Line/></button>
+                              )}
+                              {this.state.cashflowAnalysisEditInputsVisible ? (
+                                <input style={{width: '12vw'}} className="Text-Input-Number-Style" type="text" value={input.title} onChange={(event) => this.updateCashFlowAnalysisInputsTitle(event, input.id)} />
+                              ) : (
+                                <label style={{color: 'white', fontSize: 14, padding: 0, margin: 0, width: '25vh', marginTop: 3}}>{input.title}</label>
+                              )}
+                              <input className="Text-Input-Number-Style" type="text" value={input.value} onChange={(event) => this.updateCashFlowAnalysisInputs(event, input.id)} />
+                            </div>
+                          )
+                        }
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div style={{display: 'flex'}}>
-              <div style={{width: '20%'}}>
-                <button className="edit-cashflow-inputs-button" onClick={() => this.setState({cashflowAnalysisEditInputsVisible: !this.state.cashflowAnalysisEditInputsVisible})}>Edit Titles</button>
+              <button style={{width: '20%', backgroundColor:  this.state.cashflowAnalysisEditInputsVisible ? 'green' : '#0099FF'}} className="edit-cashflow-inputs-button" onClick={() => this.setState({cashflowAnalysisEditInputsVisible: !this.state.cashflowAnalysisEditInputsVisible})}>{this.state.cashflowAnalysisEditInputsVisible ? 'Done' : 'Edit Titles'}</button>
+              
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <button className="Generate-Cashflow-PDF-Button" onClick={this.generateCashflow}>Generate PDF</button>
               </div>
-            </div>
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <button className="Generate-Cashflow-PDF-Button" onClick={this.generateCashflow}>Generate PDF</button>
-            </div>
 
-            <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.cashflowAnalysisError}</p>
+              <p style={{fontSize: 25, color: 'red', textAlign: 'center'}}>{this.state.cashflowAnalysisError}</p>
 
+            </div>
           </div>
 
           <div id="cashFlowContent" style={{width: '50%', backgroundColor: 'white'}}>
@@ -1320,7 +1328,7 @@ export default class App extends PureComponent {
             
             <div style={{width: 600, marginLeft: 75, display: 'flex'}}>
               <p style={{fontSize: 15, margin: 0, width: 430}}>
-                Net Operating Income for fiscal year ending: {this.state.cashflowAnalysisFiscalSalesMonth}/{this.state.cashflowAnalysisFiscalSalesDay}/{this.state.cashflowAnalysisFiscalSalesYear}
+                Net Operating Income for fiscal year ending: {month}/{this.state.cashflowAnalysisFiscalSalesDay}/{this.state.cashflowAnalysisFiscalSalesYear}
               </p>
               <p style={{fontSize: 15, margin: 0, width: 45}}>
                 . . . . . .
@@ -1606,11 +1614,11 @@ export default class App extends PureComponent {
       this.setState({cashflowAnalysisError: "Please add a business name"})
       return
     }
-    if(this.state.cashflowAnalysisFiscalYearSales === ""){
+    if(this.state.cashflowAnalysisFiscalYearSales === "0" || this.state.cashflowAnalysisFiscalYearSales === ""){
       this.setState({cashflowAnalysisError: "Please add business fiscal sales"})
       return
     }
-    if(this.state.cashflowAnalysisNetOperatingIncome === ""){
+    if(this.state.cashflowAnalysisNetOperatingIncome === "0" || this.state.cashflowAnalysisNetOperatingIncome === ""){
       this.setState({cashflowAnalysisError: "Please add business net operating income"})
       return
     }
@@ -1651,13 +1659,21 @@ export default class App extends PureComponent {
       this.state.brokerConfidentialityVisible === false &&
       this.state.cashflowAnalysisVisible === false){
         return(
-          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh'}}>
-            <div style={{display: 'flex'}}>
-              <div style={{marginTop: '5vh'}}>
+          <div style={{height: '100vh'}}>
+            <p style={{textAlign: 'center', color: 'white', fontSize: 40, paddingTop: '3%', textDecoration: 'underline'}}>Welcome to The CBA Group document creation website</p>
+            <p style={{color: 'white', fontSize: 25, marginLeft: '16%'}}>Here you can easily create a number of documents.</p>
+            <p style={{color: 'white', fontSize: 20, marginLeft: '16%', marginTop: '2%'}}>Benefits of this website:</p>
+            <ol style={{color: 'white', fontSize: 18, marginLeft: '16%'}}>
+              <li>Quickly and easily create documents</li>
+              <li>All documents retain same formatting, maintaining document consistancy</li>
+            </ol>  
+            <p style={{color: 'white', fontSize: 25, marginLeft: '16%', marginTop: '3%'}}>GET STARTED by clicking one of the document buttons below:</p>
+            <div style={{display: 'flex', marginLeft: '16%', marginTop: 10}}>
+              <div>
                 <button className="Contract-Button" onClick={() => this.setState({consentOfSpouseVisible: !this.state.consentOfSpouseVisible, blisVisible: false, corporateResolutionToSellVisible: false, brokerConfidentialityVisible: false, cashflowAnalysisVisible: false})}>Consent of Spouse</button>
                 <button className="Contract-Button" onClick={() => this.setState({corporateResolutionToSellVisible: !this.state.corporateResolutionToSellVisible, consentOfSpouseVisible: false, blisVisible: false, brokerConfidentialityVisible: false, cashflowAnalysisVisible: false})}>Corporate Resolution To Sell</button>
               </div>
-              <div style={{marginTop: '5vh', marginLeft: '10vh'}}>
+              <div style={{marginLeft: '10vh'}}>
                 <button className="Contract-Button" onClick={() => this.setState({brokerConfidentialityVisible: !this.state.brokerConfidentialityVisible, corporateResolutionToSellVisible: false, consentOfSpouseVisible: false, blisVisible: false, cashflowAnalysisVisible: false})}>Broker Confidentiality</button>
                 <button className="Contract-Button" onClick={() => this.setState({cashflowAnalysisVisible: !this.state.cashflowAnalysisVisible, brokerConfidentialityVisible: false, corporateResolutionToSellVisible: false, consentOfSpouseVisible: false, blisVisible: false})}>Cashflow Analysis</button>
               </div>
@@ -1679,7 +1695,7 @@ export default class App extends PureComponent {
 
   render() {
     return (
-      <div style={{backgroundColor: "#3c4548", height: '100vh'}}>
+      <div style={{backgroundColor: "#3c4548"}}>
         {this.renderView()}
       </div>
     )
