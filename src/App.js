@@ -717,7 +717,10 @@ export default class App extends PureComponent {
 
                   <div style={{marginLeft: '2vh'}}>
                     <DropdownButton alignRight disabled={(this.state.consentOfSpouseDay === "Select" || this.state.consentOfSpouseMonth === "Select") ? true : false}  title={this.state.consentOfSpouseYear} id="dropdown-menu-align-right">
-                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2022"})}>2022</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2023"})}>2023</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2024"})}>2024</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2025"})}>2025</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({consentOfSpouseYear: "2026"})}>2026</Dropdown.Item>
                     </DropdownButton>
                     <label style={{textAlign: 'center'}} className="Text-Label-Style">Year</label>
                   </div>
@@ -856,7 +859,10 @@ export default class App extends PureComponent {
 
                 <div style={{marginLeft: '3vh'}}>
                   <DropdownButton alignRight disabled={(this.state.corporateResolutionToSellDay === "Select" || this.state.corporateResolutionToSellMonth === "Select") ? true : false} title={this.state.corporateResolutionToSellYear} id="dropdown-menu-align-right">
-                    <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellYear: "2022"})}>2022</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellYear: "2023"})}>2023</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellYear: "2024"})}>2024</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellYear: "2025"})}>2025</Dropdown.Item>
+                    <Dropdown.Item onClick={() => this.setState({corporateResolutionToSellYear: "2026"})}>2026</Dropdown.Item>
                   </DropdownButton>
                   <label style={{textAlign: 'center'}} className="Text-Label-Style">Year</label>
                 </div>
@@ -1007,7 +1013,10 @@ export default class App extends PureComponent {
 
               <div style={{marginLeft: '3vh'}}>
                 <DropdownButton alignRight disabled={(this.state.brokerConfidentialityDay === "Select" || this.state.brokerConfidentialityMonth === "Select") ? true : false} title={this.state.brokerConfidentialityYear} id="dropdown-menu-align-right">
-                  <Dropdown.Item onClick={() => this.setState({brokerConfidentialityYear: "2022"})}>2022</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({brokerConfidentialityYear: "2023"})}>2023</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({brokerConfidentialityYear: "2024"})}>2024</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({brokerConfidentialityYear: "2025"})}>2025</Dropdown.Item>
+                  <Dropdown.Item onClick={() => this.setState({brokerConfidentialityYear: "2026"})}>2026</Dropdown.Item>
                 </DropdownButton>
                 <label style={{textAlign: 'center'}} className="Text-Label-Style">Year</label>
               </div>
@@ -1097,15 +1106,7 @@ export default class App extends PureComponent {
             (Telephone)
           </p>
 
-          <p style={{fontSize: 13, marginLeft: 50, width: 300, textDecoration: 'underline', marginTop: 15, marginBottom: 0, padding: 0}}>
-            (704) 895-4278
-          </p>
-
-          <p style={{fontSize: 13, marginLeft: 50, marginTop: 0, marginBottom: 0, padding: 0}}>
-            (Fax)
-          </p>
-
-          <p style={{fontSize: 12, width: 100, marginLeft: 600, marginTop: 190}}>CBA Form 2031</p>
+          <p style={{fontSize: 12, width: 100, marginLeft: 600, marginTop: 300}}>CBA Form 2031</p>
 
           </div>
         </div>
@@ -1211,6 +1212,11 @@ export default class App extends PureComponent {
                       <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2020"})}>2020</Dropdown.Item>
                       <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2021"})}>2021</Dropdown.Item>
                       <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2022"})}>2022</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2023"})}>2023</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2024"})}>2024</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2025"})}>2025</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2026"})}>2026</Dropdown.Item>
+                      <Dropdown.Item onClick={() => this.setState({cashflowAnalysisFiscalSalesYear: "2027"})}>2027</Dropdown.Item>
                     </DropdownButton>
                     <label className="Text-Label-Style">Year</label>
                   </div>
